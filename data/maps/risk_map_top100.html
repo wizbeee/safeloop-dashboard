@@ -1,0 +1,3440 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_d603ead3abac3f81ed9702f4e72d4dc9 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+<div style="position:fixed; bottom:20px; left:20px; z-index:9999; background:white;
+            padding:10px 14px; border:2px solid #ccc; border-radius:6px;
+            font-family:Pretendard,sans-serif; font-size:12px; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+<b>고위험 Top 100 학교</b><br>
+<span style="color:#666;font-size:11px;">학교 식별 정보 비공개 · 좌표는 시도 단위 임의 표시</span>
+</div>
+    
+            <div class="folium-map" id="map_d603ead3abac3f81ed9702f4e72d4dc9" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_d603ead3abac3f81ed9702f4e72d4dc9 = L.map(
+                "map_d603ead3abac3f81ed9702f4e72d4dc9",
+                {
+                    center: [36.5, 127.8],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 7,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_44cb43b1c57beff232e95b880e0119e2 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_44cb43b1c57beff232e95b880e0119e2.addTo(map_d603ead3abac3f81ed9702f4e72d4dc9);
+        
+    
+            var tile_layer_998fe7d29c77af1bfe8f2665202e15a5 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_998fe7d29c77af1bfe8f2665202e15a5.addTo(map_d603ead3abac3f81ed9702f4e72d4dc9);
+        
+    
+            var marker_cluster_62212b474060be54eea387570dea5d8f = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_a9fec5afea2cc24f2699048f57e961ac = L.circleMarker(
+                [37.46613209507789, 127.33857144512793],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_7718372b68ebdf0534d80cd0e91094ab = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_f56ba3db1dd28dd84f8c685cc5926c8a = $(`<div id="html_f56ba3db1dd28dd84f8c685cc5926c8a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00000</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>62.1</b><br>우선순위 점수: <b>504.3</b><br>미관리 영역: 5/6 · 환경 위험: 10<br>점검 경과: 123일 · 학생: 1229명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_7718372b68ebdf0534d80cd0e91094ab.setContent(html_f56ba3db1dd28dd84f8c685cc5926c8a);
+            
+        
+
+        circle_marker_a9fec5afea2cc24f2699048f57e961ac.bindPopup(popup_7718372b68ebdf0534d80cd0e91094ab)
+        ;
+
+        
+    
+    
+            circle_marker_a9fec5afea2cc24f2699048f57e961ac.bindTooltip(
+                `<div>
+                     S00000 · 위험도 62.1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d13bc2e11ff9d6c90105f97b78f71c90 = L.circleMarker(
+                [37.75209515344912, 127.05692678735763],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_8489d8cd3cac43ad44cd1bb8286dba04 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_92115fef2b6777f2602108cf0f374533 = $(`<div id="html_92115fef2b6777f2602108cf0f374533" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00001</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>52.6</b><br>우선순위 점수: <b>399.4</b><br>미관리 영역: 3/6 · 환경 위험: 19<br>점검 경과: 123일 · 학생: 734명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_8489d8cd3cac43ad44cd1bb8286dba04.setContent(html_92115fef2b6777f2602108cf0f374533);
+            
+        
+
+        circle_marker_d13bc2e11ff9d6c90105f97b78f71c90.bindPopup(popup_8489d8cd3cac43ad44cd1bb8286dba04)
+        ;
+
+        
+    
+    
+            circle_marker_d13bc2e11ff9d6c90105f97b78f71c90.bindTooltip(
+                `<div>
+                     S00001 · 위험도 52.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e05c4291d82302700777a8f44132f0ef = L.circleMarker(
+                [37.29131491235395, 126.70279561626896],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_19eab9446d8e2802ac3c0a4a0d94456e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_88f98bdbd64b9eb945e6eaedc181c363 = $(`<div id="html_88f98bdbd64b9eb945e6eaedc181c363" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00002</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>53.6</b><br>우선순위 점수: <b>388.9</b><br>미관리 영역: 4/6 · 환경 위험: 9<br>점검 경과: 125일 · 학생: 521명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_19eab9446d8e2802ac3c0a4a0d94456e.setContent(html_88f98bdbd64b9eb945e6eaedc181c363);
+            
+        
+
+        circle_marker_e05c4291d82302700777a8f44132f0ef.bindPopup(popup_19eab9446d8e2802ac3c0a4a0d94456e)
+        ;
+
+        
+    
+    
+            circle_marker_e05c4291d82302700777a8f44132f0ef.bindTooltip(
+                `<div>
+                     S00002 · 위험도 53.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5877c3844f9e06e7646d0dedd9eecf8a = L.circleMarker(
+                [35.51786688973456, 128.89434091661997],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_cc93a4536347166cec2b98a434d5790a = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_2870f8a1a2b8d68099915380b2437d80 = $(`<div id="html_2870f8a1a2b8d68099915380b2437d80" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00003</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>대구광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>49.3</b><br>우선순위 점수: <b>387.6</b><br>미관리 영역: 2/6 · 환경 위험: 19<br>점검 경과: 222일 · 학생: 951명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_cc93a4536347166cec2b98a434d5790a.setContent(html_2870f8a1a2b8d68099915380b2437d80);
+            
+        
+
+        circle_marker_5877c3844f9e06e7646d0dedd9eecf8a.bindPopup(popup_cc93a4536347166cec2b98a434d5790a)
+        ;
+
+        
+    
+    
+            circle_marker_5877c3844f9e06e7646d0dedd9eecf8a.bindTooltip(
+                `<div>
+                     S00003 · 위험도 49.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_de71252b9aaff27caa4fb59602566254 = L.circleMarker(
+                [35.26049200939457, 129.24205806223685],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_4b70f188307163d982c88eb3a164cac3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d5c2021ca3521887ad14b913a4d6f007 = $(`<div id="html_d5c2021ca3521887ad14b913a4d6f007" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00004</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>부산광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>51.8</b><br>우선순위 점수: <b>378.8</b><br>미관리 영역: 4/6 · 환경 위험: 7<br>점검 경과: 135일 · 학생: 547명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_4b70f188307163d982c88eb3a164cac3.setContent(html_d5c2021ca3521887ad14b913a4d6f007);
+            
+        
+
+        circle_marker_de71252b9aaff27caa4fb59602566254.bindPopup(popup_4b70f188307163d982c88eb3a164cac3)
+        ;
+
+        
+    
+    
+            circle_marker_de71252b9aaff27caa4fb59602566254.bindTooltip(
+                `<div>
+                     S00004 · 위험도 51.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_36db93b5e7f588b0f3d48df652d2b9fa = L.circleMarker(
+                [37.18296759543664, 127.35392788172959],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_4de8430899f2b39125374829344b34c9 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_42249ea77f6e11e292511987ab07eaca = $(`<div id="html_42249ea77f6e11e292511987ab07eaca" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00005</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>50.4</b><br>우선순위 점수: <b>366.3</b><br>미관리 영역: 4/6 · 환경 위험: 5<br>점검 경과: 165일 · 학생: 528명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_4de8430899f2b39125374829344b34c9.setContent(html_42249ea77f6e11e292511987ab07eaca);
+            
+        
+
+        circle_marker_36db93b5e7f588b0f3d48df652d2b9fa.bindPopup(popup_4de8430899f2b39125374829344b34c9)
+        ;
+
+        
+    
+    
+            circle_marker_36db93b5e7f588b0f3d48df652d2b9fa.bindTooltip(
+                `<div>
+                     S00005 · 위험도 50.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f74484138f3e11f986d26210ba08c4be = L.circleMarker(
+                [35.98345411264034, 126.92287128854262],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_f99d327ca815106a36d289258a9db3b8 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_7ffb7afa32e6eab09f052bede2431fe4 = $(`<div id="html_7ffb7afa32e6eab09f052bede2431fe4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00006</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>51.4</b><br>우선순위 점수: <b>360.9</b><br>미관리 영역: 2/6 · 환경 위험: 19<br>점검 경과: 268일 · 학생: 410명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_f99d327ca815106a36d289258a9db3b8.setContent(html_7ffb7afa32e6eab09f052bede2431fe4);
+            
+        
+
+        circle_marker_f74484138f3e11f986d26210ba08c4be.bindPopup(popup_f99d327ca815106a36d289258a9db3b8)
+        ;
+
+        
+    
+    
+            circle_marker_f74484138f3e11f986d26210ba08c4be.bindTooltip(
+                `<div>
+                     S00006 · 위험도 51.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_15169004abecdf28fb6cbb0626c54dc0 = L.circleMarker(
+                [37.159259973765685, 127.26502360788274],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_423fd717b5da74ec01780e1f56bdf4dc = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_44d34fa244cedda505fe4bfa59711c69 = $(`<div id="html_44d34fa244cedda505fe4bfa59711c69" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00007</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>45.3</b><br>우선순위 점수: <b>356.3</b><br>미관리 영역: 3/6 · 환경 위험: 8<br>점검 경과: 136일 · 학생: 955명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_423fd717b5da74ec01780e1f56bdf4dc.setContent(html_44d34fa244cedda505fe4bfa59711c69);
+            
+        
+
+        circle_marker_15169004abecdf28fb6cbb0626c54dc0.bindPopup(popup_423fd717b5da74ec01780e1f56bdf4dc)
+        ;
+
+        
+    
+    
+            circle_marker_15169004abecdf28fb6cbb0626c54dc0.bindTooltip(
+                `<div>
+                     S00007 · 위험도 45.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fce0fd63b7bc9f08c0ecc318d2811a38 = L.circleMarker(
+                [34.65949379436763, 126.48280514530579],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_52cf115490d59d1e05d47883f0335f7d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_452428d87e8fca5bc9fb78f713b65c4a = $(`<div id="html_452428d87e8fca5bc9fb78f713b65c4a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00008</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전라남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>48.8</b><br>우선순위 점수: <b>356.1</b><br>미관리 영역: 2/6 · 환경 위험: 22<br>점검 경과: 181일 · 학생: 539명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_52cf115490d59d1e05d47883f0335f7d.setContent(html_452428d87e8fca5bc9fb78f713b65c4a);
+            
+        
+
+        circle_marker_fce0fd63b7bc9f08c0ecc318d2811a38.bindPopup(popup_52cf115490d59d1e05d47883f0335f7d)
+        ;
+
+        
+    
+    
+            circle_marker_fce0fd63b7bc9f08c0ecc318d2811a38.bindTooltip(
+                `<div>
+                     S00008 · 위험도 48.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6f1886a132b3cd32664265b3cfcc7863 = L.circleMarker(
+                [37.51205601491369, 126.81098331215843],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_53762d8def1c5aa40415a40fdc9f39e1 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_a22a017333407d43b8291856b8a58886 = $(`<div id="html_a22a017333407d43b8291856b8a58886" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00009</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>45.8</b><br>우선순위 점수: <b>354.1</b><br>미관리 영역: 2/6 · 환경 위험: 20<br>점검 경과: 133일 · 학생: 843명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_53762d8def1c5aa40415a40fdc9f39e1.setContent(html_a22a017333407d43b8291856b8a58886);
+            
+        
+
+        circle_marker_6f1886a132b3cd32664265b3cfcc7863.bindPopup(popup_53762d8def1c5aa40415a40fdc9f39e1)
+        ;
+
+        
+    
+    
+            circle_marker_6f1886a132b3cd32664265b3cfcc7863.bindTooltip(
+                `<div>
+                     S00009 · 위험도 45.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7b9ff827f0b955690d386a441cad0405 = L.circleMarker(
+                [35.8069823157779, 126.86459508852164],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_86e95650da8f039905450ca29160951e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_26ad01ab807f366758afd6c8164ed464 = $(`<div id="html_26ad01ab807f366758afd6c8164ed464" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00010</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>45.4</b><br>우선순위 점수: <b>349.2</b><br>미관리 영역: 2/6 · 환경 위험: 15<br>점검 경과: 184일 · 학생: 802명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_86e95650da8f039905450ca29160951e.setContent(html_26ad01ab807f366758afd6c8164ed464);
+            
+        
+
+        circle_marker_7b9ff827f0b955690d386a441cad0405.bindPopup(popup_86e95650da8f039905450ca29160951e)
+        ;
+
+        
+    
+    
+            circle_marker_7b9ff827f0b955690d386a441cad0405.bindTooltip(
+                `<div>
+                     S00010 · 위험도 45.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_016a7b9cc5d24d775404a7faf8ebbb50 = L.circleMarker(
+                [37.40021571882817, 126.87108947463494],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_80e6a254336e976bfdd1749c180f4308 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d903137b583c80cebc2c0827ba617bda = $(`<div id="html_d903137b583c80cebc2c0827ba617bda" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00011</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>45.6</b><br>우선순위 점수: <b>346.4</b><br>미관리 영역: 2/6 · 환경 위험: 19<br>점검 경과: 139일 · 학생: 737명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_80e6a254336e976bfdd1749c180f4308.setContent(html_d903137b583c80cebc2c0827ba617bda);
+            
+        
+
+        circle_marker_016a7b9cc5d24d775404a7faf8ebbb50.bindPopup(popup_80e6a254336e976bfdd1749c180f4308)
+        ;
+
+        
+    
+    
+            circle_marker_016a7b9cc5d24d775404a7faf8ebbb50.bindTooltip(
+                `<div>
+                     S00011 · 위험도 45.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_91b06ae6753f1bd08e736cd58fb64463 = L.circleMarker(
+                [35.68235598737363, 127.38114076911441],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_2ab142a7ae90dac25530924f7a446992 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d2a38552b40f45937b42d4f7a0545e38 = $(`<div id="html_d2a38552b40f45937b42d4f7a0545e38" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00012</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>46.8</b><br>우선순위 점수: <b>341.5</b><br>미관리 영역: 3/6 · 환경 위험: 8<br>점검 경과: 169일 · 학생: 541명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_2ab142a7ae90dac25530924f7a446992.setContent(html_d2a38552b40f45937b42d4f7a0545e38);
+            
+        
+
+        circle_marker_91b06ae6753f1bd08e736cd58fb64463.bindPopup(popup_2ab142a7ae90dac25530924f7a446992)
+        ;
+
+        
+    
+    
+            circle_marker_91b06ae6753f1bd08e736cd58fb64463.bindTooltip(
+                `<div>
+                     S00012 · 위험도 46.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_51713456e4d56082bac47cc1d00e7f8d = L.circleMarker(
+                [36.33573902572669, 128.51698755073087],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_54f8204cdd38992c5d994a9b54836fd6 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_4005f7297963dcd999939722f1996cea = $(`<div id="html_4005f7297963dcd999939722f1996cea" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00013</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>55.4</b><br>우선순위 점수: <b>339.5</b><br>미관리 영역: 4/6 · 환경 위험: 6<br>점검 경과: 243일 · 학생: 167명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_54f8204cdd38992c5d994a9b54836fd6.setContent(html_4005f7297963dcd999939722f1996cea);
+            
+        
+
+        circle_marker_51713456e4d56082bac47cc1d00e7f8d.bindPopup(popup_54f8204cdd38992c5d994a9b54836fd6)
+        ;
+
+        
+    
+    
+            circle_marker_51713456e4d56082bac47cc1d00e7f8d.bindTooltip(
+                `<div>
+                     S00013 · 위험도 55.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3ef99119f40aab07b31215d373ea03b7 = L.circleMarker(
+                [37.64043165508963, 126.615160330176],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_5e59dd908fc518313f83c5e8eda27f7f = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_6dfdffbc8e67b1f6632974b26268bd78 = $(`<div id="html_6dfdffbc8e67b1f6632974b26268bd78" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00014</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>46.9</b><br>우선순위 점수: <b>338.0</b><br>미관리 영역: 3/6 · 환경 위험: 10<br>점검 경과: 128일 · 학생: 493명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_5e59dd908fc518313f83c5e8eda27f7f.setContent(html_6dfdffbc8e67b1f6632974b26268bd78);
+            
+        
+
+        circle_marker_3ef99119f40aab07b31215d373ea03b7.bindPopup(popup_5e59dd908fc518313f83c5e8eda27f7f)
+        ;
+
+        
+    
+    
+            circle_marker_3ef99119f40aab07b31215d373ea03b7.bindTooltip(
+                `<div>
+                     S00014 · 위험도 46.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d382ff6e84e41c4c8df4acb31a207b5d = L.circleMarker(
+                [37.49983588152115, 127.25471929894982],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_3a89c8dfed5213d2cbd51c1703e8fbc2 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e6466669c2bee0818f2197e015d1161d = $(`<div id="html_e6466669c2bee0818f2197e015d1161d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00015</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>43.2</b><br>우선순위 점수: <b>336.8</b><br>미관리 영역: 1/6 · 환경 위험: 25<br>점검 경과: 200일 · 학생: 897명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_3a89c8dfed5213d2cbd51c1703e8fbc2.setContent(html_e6466669c2bee0818f2197e015d1161d);
+            
+        
+
+        circle_marker_d382ff6e84e41c4c8df4acb31a207b5d.bindPopup(popup_3a89c8dfed5213d2cbd51c1703e8fbc2)
+        ;
+
+        
+    
+    
+            circle_marker_d382ff6e84e41c4c8df4acb31a207b5d.bindTooltip(
+                `<div>
+                     S00015 · 위험도 43.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a8dec28715dd72d4daa1ee9d5a3589da = L.circleMarker(
+                [35.523441274388226, 128.96050842980267],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_8d71228adbcc07b2d8447bd11f5cbc5e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_9f9f94d26de123b18b705225994dce54 = $(`<div id="html_9f9f94d26de123b18b705225994dce54" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00016</b> · 초 · 사립<br><span style='color:#666;font-size:11px;'>대구광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>53.6</b><br>우선순위 점수: <b>336.5</b><br>미관리 영역: 3/6 · 환경 위험: 12<br>점검 경과: 240일 · 학생: 194명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_8d71228adbcc07b2d8447bd11f5cbc5e.setContent(html_9f9f94d26de123b18b705225994dce54);
+            
+        
+
+        circle_marker_a8dec28715dd72d4daa1ee9d5a3589da.bindPopup(popup_8d71228adbcc07b2d8447bd11f5cbc5e)
+        ;
+
+        
+    
+    
+            circle_marker_a8dec28715dd72d4daa1ee9d5a3589da.bindTooltip(
+                `<div>
+                     S00016 · 위험도 53.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fc4ced6d8a3f6483c8f2bc004968e584 = L.circleMarker(
+                [35.61080562645965, 128.93921787849317],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_2d52eaa0558ac55465b6e0828475dbb4 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_eacc4e3414cfbe3adc5d1509ae036efe = $(`<div id="html_eacc4e3414cfbe3adc5d1509ae036efe" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00017</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경상남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>44.2</b><br>우선순위 점수: <b>329.5</b><br>미관리 영역: 1/6 · 환경 위험: 28<br>점검 경과: 199일 · 학생: 635명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_2d52eaa0558ac55465b6e0828475dbb4.setContent(html_eacc4e3414cfbe3adc5d1509ae036efe);
+            
+        
+
+        circle_marker_fc4ced6d8a3f6483c8f2bc004968e584.bindPopup(popup_2d52eaa0558ac55465b6e0828475dbb4)
+        ;
+
+        
+    
+    
+            circle_marker_fc4ced6d8a3f6483c8f2bc004968e584.bindTooltip(
+                `<div>
+                     S00017 · 위험도 44.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d16f7914ac675fc650cc69b856444498 = L.circleMarker(
+                [37.2999910153387, 126.38333769120511],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_c4b4044b7bd88c234dff56227a71ec54 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_2d3dbb8dd72e8867a25ff1a243e0802e = $(`<div id="html_2d3dbb8dd72e8867a25ff1a243e0802e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00018</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>인천광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>48.4</b><br>우선순위 점수: <b>327.3</b><br>미관리 영역: 3/6 · 환경 위험: 10<br>점검 경과: 161일 · 학생: 316명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_c4b4044b7bd88c234dff56227a71ec54.setContent(html_2d3dbb8dd72e8867a25ff1a243e0802e);
+            
+        
+
+        circle_marker_d16f7914ac675fc650cc69b856444498.bindPopup(popup_c4b4044b7bd88c234dff56227a71ec54)
+        ;
+
+        
+    
+    
+            circle_marker_d16f7914ac675fc650cc69b856444498.bindTooltip(
+                `<div>
+                     S00018 · 위험도 48.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d86cde87e17e7763addb3de2092efdf7 = L.circleMarker(
+                [37.71388642120972, 126.93012199499168],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_53f8d559a0ebd3c357e13354b33816fd = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_4090c51198f112c1d6547dcc6b0b48b1 = $(`<div id="html_4090c51198f112c1d6547dcc6b0b48b1" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00019</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>48.6</b><br>우선순위 점수: <b>324.7</b><br>미관리 영역: 3/6 · 환경 위험: 11<br>점검 경과: 147일 · 학생: 291명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_53f8d559a0ebd3c357e13354b33816fd.setContent(html_4090c51198f112c1d6547dcc6b0b48b1);
+            
+        
+
+        circle_marker_d86cde87e17e7763addb3de2092efdf7.bindPopup(popup_53f8d559a0ebd3c357e13354b33816fd)
+        ;
+
+        
+    
+    
+            circle_marker_d86cde87e17e7763addb3de2092efdf7.bindTooltip(
+                `<div>
+                     S00019 · 위험도 48.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dd139d4a6888f02218854c3a030a6f26 = L.circleMarker(
+                [34.85713058787582, 126.84874152808901],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_7f98c19027b702ce8e567f14c3af94ad = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b28907dc3d0d82b73a644e8048ba32e4 = $(`<div id="html_b28907dc3d0d82b73a644e8048ba32e4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00020</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>광주광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>43.3</b><br>우선순위 점수: <b>320.8</b><br>미관리 영역: 1/6 · 환경 위험: 20<br>점검 경과: 248일 · 학생: 611명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_7f98c19027b702ce8e567f14c3af94ad.setContent(html_b28907dc3d0d82b73a644e8048ba32e4);
+            
+        
+
+        circle_marker_dd139d4a6888f02218854c3a030a6f26.bindPopup(popup_7f98c19027b702ce8e567f14c3af94ad)
+        ;
+
+        
+    
+    
+            circle_marker_dd139d4a6888f02218854c3a030a6f26.bindTooltip(
+                `<div>
+                     S00020 · 위험도 43.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e8a7af2fcd8bcad2a48e1195f02bd9a1 = L.circleMarker(
+                [36.20351081689218, 128.833056321663],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_22f8bbf57d8848e8c5446ce66db10082 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b8fb083c6baa1053a82a8a9bf1d22d7d = $(`<div id="html_b8fb083c6baa1053a82a8a9bf1d22d7d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00021</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>47.5</b><br>우선순위 점수: <b>317.7</b><br>미관리 영역: 3/6 · 환경 위험: 10<br>점검 경과: 141일 · 학생: 294명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_22f8bbf57d8848e8c5446ce66db10082.setContent(html_b8fb083c6baa1053a82a8a9bf1d22d7d);
+            
+        
+
+        circle_marker_e8a7af2fcd8bcad2a48e1195f02bd9a1.bindPopup(popup_22f8bbf57d8848e8c5446ce66db10082)
+        ;
+
+        
+    
+    
+            circle_marker_e8a7af2fcd8bcad2a48e1195f02bd9a1.bindTooltip(
+                `<div>
+                     S00021 · 위험도 47.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6429c25154684da07df6e1e9357331f5 = L.circleMarker(
+                [35.045323985280014, 128.82251782748318],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_1d8e7006e24725ef8703dda9d0aaa52c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e157f6394bd96d43c13d90956a0cdee1 = $(`<div id="html_e157f6394bd96d43c13d90956a0cdee1" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00022</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>경상남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.0</b><br>우선순위 점수: <b>312.0</b><br>미관리 영역: 2/6 · 환경 위험: 8<br>점검 경과: 124일 · 학생: 1672명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_1d8e7006e24725ef8703dda9d0aaa52c.setContent(html_e157f6394bd96d43c13d90956a0cdee1);
+            
+        
+
+        circle_marker_6429c25154684da07df6e1e9357331f5.bindPopup(popup_1d8e7006e24725ef8703dda9d0aaa52c)
+        ;
+
+        
+    
+    
+            circle_marker_6429c25154684da07df6e1e9357331f5.bindTooltip(
+                `<div>
+                     S00022 · 위험도 37.0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_67b6a15594a05c6bab513bec88fde4ae = L.circleMarker(
+                [37.26316886087153, 127.53435441694225],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_e9dfc9caed6e1d65082f24c1c1c7f18c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fb3a1a48b6f3c32274f4eb8bbef53099 = $(`<div id="html_fb3a1a48b6f3c32274f4eb8bbef53099" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00023</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.0</b><br>우선순위 점수: <b>309.8</b><br>미관리 영역: 0/6 · 환경 위험: 37<br>점검 경과: 197일 · 학생: 1029명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_e9dfc9caed6e1d65082f24c1c1c7f18c.setContent(html_fb3a1a48b6f3c32274f4eb8bbef53099);
+            
+        
+
+        circle_marker_67b6a15594a05c6bab513bec88fde4ae.bindPopup(popup_e9dfc9caed6e1d65082f24c1c1c7f18c)
+        ;
+
+        
+    
+    
+            circle_marker_67b6a15594a05c6bab513bec88fde4ae.bindTooltip(
+                `<div>
+                     S00023 · 위험도 39.0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_264000acfe743848d4901ebaa37600b6 = L.circleMarker(
+                [36.61336822347462, 128.2534835644204],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_21e2e6a62b49a177557c23bed2a773c3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_7b75923416ddf64c7920fdaea20cb815 = $(`<div id="html_7b75923416ddf64c7920fdaea20cb815" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00024</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>44.7</b><br>우선순위 점수: <b>309.6</b><br>미관리 영역: 3/6 · 환경 위험: 7<br>점검 경과: 147일 · 학생: 376명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_21e2e6a62b49a177557c23bed2a773c3.setContent(html_7b75923416ddf64c7920fdaea20cb815);
+            
+        
+
+        circle_marker_264000acfe743848d4901ebaa37600b6.bindPopup(popup_21e2e6a62b49a177557c23bed2a773c3)
+        ;
+
+        
+    
+    
+            circle_marker_264000acfe743848d4901ebaa37600b6.bindTooltip(
+                `<div>
+                     S00024 · 위험도 44.7
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_19d6bec063e75b079251e285508dbd6c = L.circleMarker(
+                [35.535167702211645, 127.07270625868888],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_9f166f011d8599775598819eceac859c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_84db73ab1c60faf7efac5db35959c3c2 = $(`<div id="html_84db73ab1c60faf7efac5db35959c3c2" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00025</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>광주광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.8</b><br>우선순위 점수: <b>307.2</b><br>미관리 영역: 2/6 · 환경 위험: 10<br>점검 경과: 141일 · 학생: 829명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_9f166f011d8599775598819eceac859c.setContent(html_84db73ab1c60faf7efac5db35959c3c2);
+            
+        
+
+        circle_marker_19d6bec063e75b079251e285508dbd6c.bindPopup(popup_9f166f011d8599775598819eceac859c)
+        ;
+
+        
+    
+    
+            circle_marker_19d6bec063e75b079251e285508dbd6c.bindTooltip(
+                `<div>
+                     S00025 · 위험도 39.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_07e0c9ebe9feecec7ab6535eee28b1ec = L.circleMarker(
+                [35.16769915325135, 126.7788618803421],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_82731b774484142fff17173da2de70ad = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_1ca4afc942ae69a1c8dd474e44160900 = $(`<div id="html_1ca4afc942ae69a1c8dd474e44160900" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00026</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전라남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>42.4</b><br>우선순위 점수: <b>306.1</b><br>미관리 영역: 2/6 · 환경 위험: 7<br>점검 경과: 268일 · 학생: 499명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_82731b774484142fff17173da2de70ad.setContent(html_1ca4afc942ae69a1c8dd474e44160900);
+            
+        
+
+        circle_marker_07e0c9ebe9feecec7ab6535eee28b1ec.bindPopup(popup_82731b774484142fff17173da2de70ad)
+        ;
+
+        
+    
+    
+            circle_marker_07e0c9ebe9feecec7ab6535eee28b1ec.bindTooltip(
+                `<div>
+                     S00026 · 위험도 42.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5029523e60bbadf601f5f1d90083e385 = L.circleMarker(
+                [37.64481998304887, 127.3154993880185],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_c57d4d5e06afb4106e65d941092d2cdc = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e1091f31428cdbe6cabeca665b72abc8 = $(`<div id="html_e1091f31428cdbe6cabeca665b72abc8" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00027</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.2</b><br>우선순위 점수: <b>305.8</b><br>미관리 영역: 1/6 · 환경 위험: 19<br>점검 경과: 147일 · 학생: 1102명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_c57d4d5e06afb4106e65d941092d2cdc.setContent(html_e1091f31428cdbe6cabeca665b72abc8);
+            
+        
+
+        circle_marker_5029523e60bbadf601f5f1d90083e385.bindPopup(popup_c57d4d5e06afb4106e65d941092d2cdc)
+        ;
+
+        
+    
+    
+            circle_marker_5029523e60bbadf601f5f1d90083e385.bindTooltip(
+                `<div>
+                     S00027 · 위험도 38.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a0d2c38c60b5f516d2971dca6de94146 = L.circleMarker(
+                [35.38829400164153, 126.90978628993533],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_136a2fbcf7b1712aef6994cfb6df44e2 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_f2224ef7247a56820575886bc5114f2e = $(`<div id="html_f2224ef7247a56820575886bc5114f2e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00028</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.9</b><br>우선순위 점수: <b>304.1</b><br>미관리 영역: 1/6 · 환경 위험: 17<br>점검 경과: 207일 · 학생: 752명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_136a2fbcf7b1712aef6994cfb6df44e2.setContent(html_f2224ef7247a56820575886bc5114f2e);
+            
+        
+
+        circle_marker_a0d2c38c60b5f516d2971dca6de94146.bindPopup(popup_136a2fbcf7b1712aef6994cfb6df44e2)
+        ;
+
+        
+    
+    
+            circle_marker_a0d2c38c60b5f516d2971dca6de94146.bindTooltip(
+                `<div>
+                     S00028 · 위험도 39.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c37a23e1e4ab9bedc5b93e74fb018c59 = L.circleMarker(
+                [37.20268183112843, 126.8382642646106],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_3ecae940f6a2de271e3ab191aebdbfea = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_ca027d2f9a7b84be5a2c358c1deae114 = $(`<div id="html_ca027d2f9a7b84be5a2c358c1deae114" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00029</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>44.1</b><br>우선순위 점수: <b>303.5</b><br>미관리 영역: 2/6 · 환경 위험: 16<br>점검 경과: 143일 · 학생: 355명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_3ecae940f6a2de271e3ab191aebdbfea.setContent(html_ca027d2f9a7b84be5a2c358c1deae114);
+            
+        
+
+        circle_marker_c37a23e1e4ab9bedc5b93e74fb018c59.bindPopup(popup_3ecae940f6a2de271e3ab191aebdbfea)
+        ;
+
+        
+    
+    
+            circle_marker_c37a23e1e4ab9bedc5b93e74fb018c59.bindTooltip(
+                `<div>
+                     S00029 · 위험도 44.1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cea0b242e8a383dca6f45d57126d7aab = L.circleMarker(
+                [35.62844183175159, 126.97007922541913],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_bd629ee170acda6cb7735993bd7f5264 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_563f7d7693f2ab4c6b6cc894274f0ac0 = $(`<div id="html_563f7d7693f2ab4c6b6cc894274f0ac0" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00030</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>36.7</b><br>우선순위 점수: <b>300.2</b><br>미관리 영역: 1/6 · 환경 위험: 12<br>점검 경과: 208일 · 학생: 1299명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_bd629ee170acda6cb7735993bd7f5264.setContent(html_563f7d7693f2ab4c6b6cc894274f0ac0);
+            
+        
+
+        circle_marker_cea0b242e8a383dca6f45d57126d7aab.bindPopup(popup_bd629ee170acda6cb7735993bd7f5264)
+        ;
+
+        
+    
+    
+            circle_marker_cea0b242e8a383dca6f45d57126d7aab.bindTooltip(
+                `<div>
+                     S00030 · 위험도 36.7
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_375c11cb4ce18d5a1a0aac86020cb8c6 = L.circleMarker(
+                [35.98049000732154, 127.03840266135488],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_e3ad48ad99919490da05743e02d83b6d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_78efcb7daff1a95d81a3f7adf2addb57 = $(`<div id="html_78efcb7daff1a95d81a3f7adf2addb57" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00031</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.3</b><br>우선순위 점수: <b>299.9</b><br>미관리 영역: 1/6 · 환경 위험: 15<br>점검 경과: 220일 · 학생: 755명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_e3ad48ad99919490da05743e02d83b6d.setContent(html_78efcb7daff1a95d81a3f7adf2addb57);
+            
+        
+
+        circle_marker_375c11cb4ce18d5a1a0aac86020cb8c6.bindPopup(popup_e3ad48ad99919490da05743e02d83b6d)
+        ;
+
+        
+    
+    
+            circle_marker_375c11cb4ce18d5a1a0aac86020cb8c6.bindTooltip(
+                `<div>
+                     S00031 · 위험도 39.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fdad7bd5b90b1f8ee36a824d1081709e = L.circleMarker(
+                [37.23854760774991, 127.5524568665266],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_87e26deee3558189c23409e5fdaadd58 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_1e4b8887a4478e0154c426e8fd1cb2c4 = $(`<div id="html_1e4b8887a4478e0154c426e8fd1cb2c4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00032</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.1</b><br>우선순위 점수: <b>299.1</b><br>미관리 영역: 2/6 · 환경 위험: 10<br>점검 경과: 125일 · 학생: 777명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_87e26deee3558189c23409e5fdaadd58.setContent(html_1e4b8887a4478e0154c426e8fd1cb2c4);
+            
+        
+
+        circle_marker_fdad7bd5b90b1f8ee36a824d1081709e.bindPopup(popup_87e26deee3558189c23409e5fdaadd58)
+        ;
+
+        
+    
+    
+            circle_marker_fdad7bd5b90b1f8ee36a824d1081709e.bindTooltip(
+                `<div>
+                     S00032 · 위험도 39.1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_900813b6e6f9fa30500ebd9bd4506b39 = L.circleMarker(
+                [36.28873937997981, 128.7473575846032],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_78cfd8ebc4e2eca072bc7a1c7f4795a1 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_128a1d5bbfd1ccd4bbf7e8d82c416a1b = $(`<div id="html_128a1d5bbfd1ccd4bbf7e8d82c416a1b" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00033</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.6</b><br>우선순위 점수: <b>298.7</b><br>미관리 영역: 2/6 · 환경 위험: 10<br>점검 경과: 138일 · 학생: 686명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_78cfd8ebc4e2eca072bc7a1c7f4795a1.setContent(html_128a1d5bbfd1ccd4bbf7e8d82c416a1b);
+            
+        
+
+        circle_marker_900813b6e6f9fa30500ebd9bd4506b39.bindPopup(popup_78cfd8ebc4e2eca072bc7a1c7f4795a1)
+        ;
+
+        
+    
+    
+            circle_marker_900813b6e6f9fa30500ebd9bd4506b39.bindTooltip(
+                `<div>
+                     S00033 · 위험도 39.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4a434d7ea8f220582863f5f0025e4dd3 = L.circleMarker(
+                [37.226140514943815, 127.36750954928041],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_4ba1618fdf91befbc4860b3f8b4bffd3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_0dee62ec853d8b9c13524dbd77ea9a97 = $(`<div id="html_0dee62ec853d8b9c13524dbd77ea9a97" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00034</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.9</b><br>우선순위 점수: <b>297.5</b><br>미관리 영역: 1/6 · 환경 위험: 23<br>점검 경과: 145일 · 학생: 637명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_4ba1618fdf91befbc4860b3f8b4bffd3.setContent(html_0dee62ec853d8b9c13524dbd77ea9a97);
+            
+        
+
+        circle_marker_4a434d7ea8f220582863f5f0025e4dd3.bindPopup(popup_4ba1618fdf91befbc4860b3f8b4bffd3)
+        ;
+
+        
+    
+    
+            circle_marker_4a434d7ea8f220582863f5f0025e4dd3.bindTooltip(
+                `<div>
+                     S00034 · 위험도 39.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a266da832d6f86feea15ea7816cb4f91 = L.circleMarker(
+                [37.784295815437325, 126.73697254522733],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_88ffa7b9f858701e9ce8effdc7d9b75c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_6ed8fb08fed16b1fca562c23e9de6b9b = $(`<div id="html_6ed8fb08fed16b1fca562c23e9de6b9b" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00035</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.7</b><br>우선순위 점수: <b>296.6</b><br>미관리 영역: 1/6 · 환경 위험: 22<br>점검 경과: 128일 · 학생: 783명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_88ffa7b9f858701e9ce8effdc7d9b75c.setContent(html_6ed8fb08fed16b1fca562c23e9de6b9b);
+            
+        
+
+        circle_marker_a266da832d6f86feea15ea7816cb4f91.bindPopup(popup_88ffa7b9f858701e9ce8effdc7d9b75c)
+        ;
+
+        
+    
+    
+            circle_marker_a266da832d6f86feea15ea7816cb4f91.bindTooltip(
+                `<div>
+                     S00035 · 위험도 38.7
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_37d0bff61ddd0975a1341636aaa2cc58 = L.circleMarker(
+                [37.17091769369888, 127.23036914276386],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_8fdeba02c2709e2c4a90c3492bf4cab8 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_74f1edefe00180c9b4831d257682c1ef = $(`<div id="html_74f1edefe00180c9b4831d257682c1ef" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00036</b> · 초 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>40.3</b><br>우선순위 점수: <b>295.8</b><br>미관리 영역: 2/6 · 환경 위험: 11<br>점검 경과: 134일 · 학생: 564명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_8fdeba02c2709e2c4a90c3492bf4cab8.setContent(html_74f1edefe00180c9b4831d257682c1ef);
+            
+        
+
+        circle_marker_37d0bff61ddd0975a1341636aaa2cc58.bindPopup(popup_8fdeba02c2709e2c4a90c3492bf4cab8)
+        ;
+
+        
+    
+    
+            circle_marker_37d0bff61ddd0975a1341636aaa2cc58.bindTooltip(
+                `<div>
+                     S00036 · 위험도 40.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3b1d70d415d48d70919953bb45d6c554 = L.circleMarker(
+                [35.88298587507809, 127.3362057344328],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_15593a5195d3c21f6fd6700dd8a9a6ca = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c863f6bd08017492bc1f369917c03be6 = $(`<div id="html_c863f6bd08017492bc1f369917c03be6" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00037</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>49.9</b><br>우선순위 점수: <b>294.4</b><br>미관리 영역: 3/6 · 환경 위험: 10<br>점검 경과: 194일 · 학생: 133명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_15593a5195d3c21f6fd6700dd8a9a6ca.setContent(html_c863f6bd08017492bc1f369917c03be6);
+            
+        
+
+        circle_marker_3b1d70d415d48d70919953bb45d6c554.bindPopup(popup_15593a5195d3c21f6fd6700dd8a9a6ca)
+        ;
+
+        
+    
+    
+            circle_marker_3b1d70d415d48d70919953bb45d6c554.bindTooltip(
+                `<div>
+                     S00037 · 위험도 49.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0e791f639405f72dd190591f697a06a2 = L.circleMarker(
+                [37.78351627734875, 126.63723572138727],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_db732b96085ec22e936cb927f3af0914 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_2c30cdf0d083722c61c280aa302e6e22 = $(`<div id="html_2c30cdf0d083722c61c280aa302e6e22" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00038</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>34.2</b><br>우선순위 점수: <b>293.4</b><br>미관리 영역: 1/6 · 환경 위험: 13<br>점검 경과: 135일 · 학생: 1977명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_db732b96085ec22e936cb927f3af0914.setContent(html_2c30cdf0d083722c61c280aa302e6e22);
+            
+        
+
+        circle_marker_0e791f639405f72dd190591f697a06a2.bindPopup(popup_db732b96085ec22e936cb927f3af0914)
+        ;
+
+        
+    
+    
+            circle_marker_0e791f639405f72dd190591f697a06a2.bindTooltip(
+                `<div>
+                     S00038 · 위험도 34.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f97cd7f18ae535b07d67478ebeba00a7 = L.circleMarker(
+                [36.46277258283542, 128.19829524762008],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_3d9dc4b8acdd5cf739a4742a7520bc3a = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_7012ce0e1c88c7f5d02c800003a28df4 = $(`<div id="html_7012ce0e1c88c7f5d02c800003a28df4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00039</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>41.5</b><br>우선순위 점수: <b>293.3</b><br>미관리 영역: 1/6 · 환경 위험: 27<br>점검 경과: 147일 · 학생: 431명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_3d9dc4b8acdd5cf739a4742a7520bc3a.setContent(html_7012ce0e1c88c7f5d02c800003a28df4);
+            
+        
+
+        circle_marker_f97cd7f18ae535b07d67478ebeba00a7.bindPopup(popup_3d9dc4b8acdd5cf739a4742a7520bc3a)
+        ;
+
+        
+    
+    
+            circle_marker_f97cd7f18ae535b07d67478ebeba00a7.bindTooltip(
+                `<div>
+                     S00039 · 위험도 41.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dd8412c689327418f6118db94959d0c9 = L.circleMarker(
+                [36.00798274070048, 127.25163850146205],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_4390b4c48dbe0c806e9f2eafc47580e3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_74c2aa9513d89c1d8a0427cd3cae1157 = $(`<div id="html_74c2aa9513d89c1d8a0427cd3cae1157" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00040</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>50.4</b><br>우선순위 점수: <b>293.0</b><br>미관리 영역: 3/6 · 환경 위험: 14<br>점검 경과: 138일 · 학생: 122명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_4390b4c48dbe0c806e9f2eafc47580e3.setContent(html_74c2aa9513d89c1d8a0427cd3cae1157);
+            
+        
+
+        circle_marker_dd8412c689327418f6118db94959d0c9.bindPopup(popup_4390b4c48dbe0c806e9f2eafc47580e3)
+        ;
+
+        
+    
+    
+            circle_marker_dd8412c689327418f6118db94959d0c9.bindTooltip(
+                `<div>
+                     S00040 · 위험도 50.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5b5dca595e28b38cabf3f3bd5054d84e = L.circleMarker(
+                [37.27851841988212, 127.16914668022882],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_af374884a4fac80e2b63be19db52768e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d52da0f991fca484f841354ebff5b4b2 = $(`<div id="html_d52da0f991fca484f841354ebff5b4b2" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00041</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>36.2</b><br>우선순위 점수: <b>292.7</b><br>미관리 영역: 1/6 · 환경 위험: 16<br>점검 경과: 139일 · 학생: 1183명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_af374884a4fac80e2b63be19db52768e.setContent(html_d52da0f991fca484f841354ebff5b4b2);
+            
+        
+
+        circle_marker_5b5dca595e28b38cabf3f3bd5054d84e.bindPopup(popup_af374884a4fac80e2b63be19db52768e)
+        ;
+
+        
+    
+    
+            circle_marker_5b5dca595e28b38cabf3f3bd5054d84e.bindTooltip(
+                `<div>
+                     S00041 · 위험도 36.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_19641ac26e74654ecc7bdfbeda93dc69 = L.circleMarker(
+                [37.415285857372524, 126.8381466576214],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_2954635c5daa5590d2ae79889ad1bc76 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_cc2d1a81e26a44b6f448d44a361b6ee9 = $(`<div id="html_cc2d1a81e26a44b6f448d44a361b6ee9" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00042</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.9</b><br>우선순위 점수: <b>291.2</b><br>미관리 영역: 1/6 · 환경 위험: 16<br>점검 경과: 198일 · 학생: 653명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_2954635c5daa5590d2ae79889ad1bc76.setContent(html_cc2d1a81e26a44b6f448d44a361b6ee9);
+            
+        
+
+        circle_marker_19641ac26e74654ecc7bdfbeda93dc69.bindPopup(popup_2954635c5daa5590d2ae79889ad1bc76)
+        ;
+
+        
+    
+    
+            circle_marker_19641ac26e74654ecc7bdfbeda93dc69.bindTooltip(
+                `<div>
+                     S00042 · 위험도 38.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0304a182f47cfdfebe875796589f1ec9 = L.circleMarker(
+                [37.75018494267045, 127.08804597708416],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_84d453778afc2580af9e6e9ac26e6eee = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_63e14ba0f0deca848d8744dfdacff7e9 = $(`<div id="html_63e14ba0f0deca848d8744dfdacff7e9" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00043</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.4</b><br>우선순위 점수: <b>291.0</b><br>미관리 영역: 1/6 · 환경 위험: 19<br>점검 경과: 151일 · 학생: 722명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_84d453778afc2580af9e6e9ac26e6eee.setContent(html_63e14ba0f0deca848d8744dfdacff7e9);
+            
+        
+
+        circle_marker_0304a182f47cfdfebe875796589f1ec9.bindPopup(popup_84d453778afc2580af9e6e9ac26e6eee)
+        ;
+
+        
+    
+    
+            circle_marker_0304a182f47cfdfebe875796589f1ec9.bindTooltip(
+                `<div>
+                     S00043 · 위험도 38.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_45ffeba7e8445d08a526c0ddb5d48ffe = L.circleMarker(
+                [36.18117019406106, 128.57917194012958],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_b6aebc3ec28d01507beef23ae7a1399d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_1b6be453f475b4c8b9e42b70c1459e5d = $(`<div id="html_1b6be453f475b4c8b9e42b70c1459e5d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00044</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>대구광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>36.7</b><br>우선순위 점수: <b>289.8</b><br>미관리 영역: 1/6 · 환경 위험: 17<br>점검 경과: 136일 · 학생: 997명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_b6aebc3ec28d01507beef23ae7a1399d.setContent(html_1b6be453f475b4c8b9e42b70c1459e5d);
+            
+        
+
+        circle_marker_45ffeba7e8445d08a526c0ddb5d48ffe.bindPopup(popup_b6aebc3ec28d01507beef23ae7a1399d)
+        ;
+
+        
+    
+    
+            circle_marker_45ffeba7e8445d08a526c0ddb5d48ffe.bindTooltip(
+                `<div>
+                     S00044 · 위험도 36.7
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b371f8a6680125572de82e9d85368186 = L.circleMarker(
+                [37.109475396750646, 127.68889582977839],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_672f3427d04825a270111524301aa7fa = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_9033c1cc7b2ffb0fbd67854ec194c6f6 = $(`<div id="html_9033c1cc7b2ffb0fbd67854ec194c6f6" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00045</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.3</b><br>우선순위 점수: <b>286.8</b><br>미관리 영역: 2/6 · 환경 위험: 10<br>점검 경과: 131일 · 학생: 539명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_672f3427d04825a270111524301aa7fa.setContent(html_9033c1cc7b2ffb0fbd67854ec194c6f6);
+            
+        
+
+        circle_marker_b371f8a6680125572de82e9d85368186.bindPopup(popup_672f3427d04825a270111524301aa7fa)
+        ;
+
+        
+    
+    
+            circle_marker_b371f8a6680125572de82e9d85368186.bindTooltip(
+                `<div>
+                     S00045 · 위험도 39.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e0a073ad2f4739738569bf82fd9372b0 = L.circleMarker(
+                [36.844328038893515, 127.5404217580556],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_5a911db5a9f1816b8f62e21c72c24765 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_4ff778ff9fc8b36eaba95ec1b4931584 = $(`<div id="html_4ff778ff9fc8b36eaba95ec1b4931584" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00046</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>충청북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>40.6</b><br>우선순위 점수: <b>286.6</b><br>미관리 영역: 1/6 · 환경 위험: 23<br>점검 경과: 160일 · 학생: 429명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_5a911db5a9f1816b8f62e21c72c24765.setContent(html_4ff778ff9fc8b36eaba95ec1b4931584);
+            
+        
+
+        circle_marker_e0a073ad2f4739738569bf82fd9372b0.bindPopup(popup_5a911db5a9f1816b8f62e21c72c24765)
+        ;
+
+        
+    
+    
+            circle_marker_e0a073ad2f4739738569bf82fd9372b0.bindTooltip(
+                `<div>
+                     S00046 · 위험도 40.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_355d5e0d4ed32187e9e4a51e5cdb662b = L.circleMarker(
+                [37.67307374396365, 126.70023647709152],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_86d12faaed4c4291a3043d4b66cf2393 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_5517ca851813aec01933751f7d7f4f7e = $(`<div id="html_5517ca851813aec01933751f7d7f4f7e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00047</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>인천광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.5</b><br>우선순위 점수: <b>284.6</b><br>미관리 영역: 1/6 · 환경 위험: 19<br>점검 경과: 131일 · 학생: 732명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_86d12faaed4c4291a3043d4b66cf2393.setContent(html_5517ca851813aec01933751f7d7f4f7e);
+            
+        
+
+        circle_marker_355d5e0d4ed32187e9e4a51e5cdb662b.bindPopup(popup_86d12faaed4c4291a3043d4b66cf2393)
+        ;
+
+        
+    
+    
+            circle_marker_355d5e0d4ed32187e9e4a51e5cdb662b.bindTooltip(
+                `<div>
+                     S00047 · 위험도 37.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a0daa68776f4322810fa773b84f875c9 = L.circleMarker(
+                [37.4319862635056, 127.46033281468684],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_8b92f5e92bfa543de726d692e54f9ce3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fdb68ffd234e31d70a2cf871507f983b = $(`<div id="html_fdb68ffd234e31d70a2cf871507f983b" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00048</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>36.6</b><br>우선순위 점수: <b>283.6</b><br>미관리 영역: 1/6 · 환경 위험: 17<br>점검 경과: 134일 · 학생: 858명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_8b92f5e92bfa543de726d692e54f9ce3.setContent(html_fdb68ffd234e31d70a2cf871507f983b);
+            
+        
+
+        circle_marker_a0daa68776f4322810fa773b84f875c9.bindPopup(popup_8b92f5e92bfa543de726d692e54f9ce3)
+        ;
+
+        
+    
+    
+            circle_marker_a0daa68776f4322810fa773b84f875c9.bindTooltip(
+                `<div>
+                     S00048 · 위험도 36.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_12d3f0b4a013075282e19f58626a8816 = L.circleMarker(
+                [34.85863530139528, 128.37881314159463],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_05f7cca5b8899abaa32901e858f0be1e = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_5801701947972a86abcb1924744d14cc = $(`<div id="html_5801701947972a86abcb1924744d14cc" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00049</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>경상남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.0</b><br>우선순위 점수: <b>282.9</b><br>미관리 영역: 1/6 · 환경 위험: 12<br>점검 경과: 236일 · 학생: 627명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_05f7cca5b8899abaa32901e858f0be1e.setContent(html_5801701947972a86abcb1924744d14cc);
+            
+        
+
+        circle_marker_12d3f0b4a013075282e19f58626a8816.bindPopup(popup_05f7cca5b8899abaa32901e858f0be1e)
+        ;
+
+        
+    
+    
+            circle_marker_12d3f0b4a013075282e19f58626a8816.bindTooltip(
+                `<div>
+                     S00049 · 위험도 38.0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_17e6334e76cebd066e1b22fe3b4d9dd2 = L.circleMarker(
+                [36.260843348549386, 127.60052832901103],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_8636c5953a83d192b2558bf231184955 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_66c5c7219ddb160c3ef099d7032e94da = $(`<div id="html_66c5c7219ddb160c3ef099d7032e94da" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00050</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>충청북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.1</b><br>우선순위 점수: <b>282.8</b><br>미관리 영역: 1/6 · 환경 위험: 18<br>점검 경과: 179일 · 학생: 504명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_8636c5953a83d192b2558bf231184955.setContent(html_66c5c7219ddb160c3ef099d7032e94da);
+            
+        
+
+        circle_marker_17e6334e76cebd066e1b22fe3b4d9dd2.bindPopup(popup_8636c5953a83d192b2558bf231184955)
+        ;
+
+        
+    
+    
+            circle_marker_17e6334e76cebd066e1b22fe3b4d9dd2.bindTooltip(
+                `<div>
+                     S00050 · 위험도 39.1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_15605108e0b8655dacd311770bdfe6de = L.circleMarker(
+                [37.30778478486106, 126.71205655293177],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_325649e5271618c6cca0bcfbbbd79d86 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_ab03366c50a4c61c4931eed975e9daba = $(`<div id="html_ab03366c50a4c61c4931eed975e9daba" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00051</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>인천광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.4</b><br>우선순위 점수: <b>282.5</b><br>미관리 영역: 2/6 · 환경 위험: 9<br>점검 경과: 132일 · 학생: 571명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_325649e5271618c6cca0bcfbbbd79d86.setContent(html_ab03366c50a4c61c4931eed975e9daba);
+            
+        
+
+        circle_marker_15605108e0b8655dacd311770bdfe6de.bindPopup(popup_325649e5271618c6cca0bcfbbbd79d86)
+        ;
+
+        
+    
+    
+            circle_marker_15605108e0b8655dacd311770bdfe6de.bindTooltip(
+                `<div>
+                     S00051 · 위험도 38.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_84cceb7a38c67148dac69a49a859e39e = L.circleMarker(
+                [36.90205317914087, 128.3050337833191],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_004fc5613280d9a4fb3de78188f1fcf9 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_bd8ca17183d9e9f88334d28f569d0586 = $(`<div id="html_bd8ca17183d9e9f88334d28f569d0586" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00052</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>36.3</b><br>우선순위 점수: <b>282.4</b><br>미관리 영역: 2/6 · 환경 위험: 7<br>점검 경과: 133일 · 학생: 880명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_004fc5613280d9a4fb3de78188f1fcf9.setContent(html_bd8ca17183d9e9f88334d28f569d0586);
+            
+        
+
+        circle_marker_84cceb7a38c67148dac69a49a859e39e.bindPopup(popup_004fc5613280d9a4fb3de78188f1fcf9)
+        ;
+
+        
+    
+    
+            circle_marker_84cceb7a38c67148dac69a49a859e39e.bindTooltip(
+                `<div>
+                     S00052 · 위험도 36.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0a98f59d38d9d55479aa060229e14078 = L.circleMarker(
+                [37.34210633842851, 127.72274091083443],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_29cb665cfc83e05702dd6c68ffe81105 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_350aebcec6995ce38121bdbf324fdb84 = $(`<div id="html_350aebcec6995ce38121bdbf324fdb84" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00053</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.7</b><br>우선순위 점수: <b>281.0</b><br>미관리 영역: 2/6 · 환경 위험: 9<br>점검 경과: 159일 · 학생: 438명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_29cb665cfc83e05702dd6c68ffe81105.setContent(html_350aebcec6995ce38121bdbf324fdb84);
+            
+        
+
+        circle_marker_0a98f59d38d9d55479aa060229e14078.bindPopup(popup_29cb665cfc83e05702dd6c68ffe81105)
+        ;
+
+        
+    
+    
+            circle_marker_0a98f59d38d9d55479aa060229e14078.bindTooltip(
+                `<div>
+                     S00053 · 위험도 39.7
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0b47ca0be6d7566e895e6f1c63a503ce = L.circleMarker(
+                [37.1968385323933, 127.17988392786303],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_5499e6b0d1f5cb2faf0d336a70475fbf = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d0c4201d8ea58dbc62c2b52378861e83 = $(`<div id="html_d0c4201d8ea58dbc62c2b52378861e83" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00054</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>34.4</b><br>우선순위 점수: <b>280.9</b><br>미관리 영역: 0/6 · 환경 위험: 27<br>점검 경과: 162일 · 학생: 1278명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_5499e6b0d1f5cb2faf0d336a70475fbf.setContent(html_d0c4201d8ea58dbc62c2b52378861e83);
+            
+        
+
+        circle_marker_0b47ca0be6d7566e895e6f1c63a503ce.bindPopup(popup_5499e6b0d1f5cb2faf0d336a70475fbf)
+        ;
+
+        
+    
+    
+            circle_marker_0b47ca0be6d7566e895e6f1c63a503ce.bindTooltip(
+                `<div>
+                     S00054 · 위험도 34.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9c42ee3e3c3669f1e40daf5c5660d1f3 = L.circleMarker(
+                [35.54930116233101, 126.88197702980321],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_15e5426027c0594d6998ce23587097d3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c0cd8bcad7def45b58be7e1df53ccc4c = $(`<div id="html_c0cd8bcad7def45b58be7e1df53ccc4c" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00055</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.9</b><br>우선순위 점수: <b>280.8</b><br>미관리 영역: 2/6 · 환경 위험: 9<br>점검 경과: 143일 · 학생: 497명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_15e5426027c0594d6998ce23587097d3.setContent(html_c0cd8bcad7def45b58be7e1df53ccc4c);
+            
+        
+
+        circle_marker_9c42ee3e3c3669f1e40daf5c5660d1f3.bindPopup(popup_15e5426027c0594d6998ce23587097d3)
+        ;
+
+        
+    
+    
+            circle_marker_9c42ee3e3c3669f1e40daf5c5660d1f3.bindTooltip(
+                `<div>
+                     S00055 · 위험도 38.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dc7faadf540b2355d15331207aa5dc67 = L.circleMarker(
+                [37.91025812187406, 127.22449630365153],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_b77d9e26ee49a216a3aa066ee867d161 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_96dc4990e052fae3c65ecf6e236ad33a = $(`<div id="html_96dc4990e052fae3c65ecf6e236ad33a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00056</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.8</b><br>우선순위 점수: <b>280.5</b><br>미관리 영역: 1/6 · 환경 위험: 20<br>점검 경과: 172일 · 학생: 422명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_b77d9e26ee49a216a3aa066ee867d161.setContent(html_96dc4990e052fae3c65ecf6e236ad33a);
+            
+        
+
+        circle_marker_dc7faadf540b2355d15331207aa5dc67.bindPopup(popup_b77d9e26ee49a216a3aa066ee867d161)
+        ;
+
+        
+    
+    
+            circle_marker_dc7faadf540b2355d15331207aa5dc67.bindTooltip(
+                `<div>
+                     S00056 · 위험도 39.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_543ee331d39b0316177c749336fad5b4 = L.circleMarker(
+                [37.673223005208335, 127.27516847215017],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_4d28395bec6ac8f8556545e4dedce14f = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_52ce1fd7a46c9d4020d6573a1a0f6c75 = $(`<div id="html_52ce1fd7a46c9d4020d6573a1a0f6c75" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00057</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>35.9</b><br>우선순위 점수: <b>280.2</b><br>미관리 영역: 1/6 · 환경 위험: 16<br>점검 경과: 131일 · 학생: 906명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_4d28395bec6ac8f8556545e4dedce14f.setContent(html_52ce1fd7a46c9d4020d6573a1a0f6c75);
+            
+        
+
+        circle_marker_543ee331d39b0316177c749336fad5b4.bindPopup(popup_4d28395bec6ac8f8556545e4dedce14f)
+        ;
+
+        
+    
+    
+            circle_marker_543ee331d39b0316177c749336fad5b4.bindTooltip(
+                `<div>
+                     S00057 · 위험도 35.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5e0ac1cf6c140f60c91884691c83a28b = L.circleMarker(
+                [37.656737661519294, 127.26755604710883],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_dc6da9799c902d43d2ce8f5b9c54fede = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_7069224f8362c05157b3746ebf5da692 = $(`<div id="html_7069224f8362c05157b3746ebf5da692" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00058</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.2</b><br>우선순위 점수: <b>279.9</b><br>미관리 영역: 2/6 · 환경 위험: 7<br>점검 경과: 196일 · 학생: 466명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_dc6da9799c902d43d2ce8f5b9c54fede.setContent(html_7069224f8362c05157b3746ebf5da692);
+            
+        
+
+        circle_marker_5e0ac1cf6c140f60c91884691c83a28b.bindPopup(popup_dc6da9799c902d43d2ce8f5b9c54fede)
+        ;
+
+        
+    
+    
+            circle_marker_5e0ac1cf6c140f60c91884691c83a28b.bindTooltip(
+                `<div>
+                     S00058 · 위험도 39.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5e9293d5571979bc639e63c37f2c4739 = L.circleMarker(
+                [35.552347198791985, 128.7239737935325],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_4b1f0bf73f55e6dc1061ad1feed602c4 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_0ef71b65f4bf64ce980c16850922e6ca = $(`<div id="html_0ef71b65f4bf64ce980c16850922e6ca" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00059</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경상남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>40.7</b><br>우선순위 점수: <b>279.7</b><br>미관리 영역: 2/6 · 환경 위험: 8<br>점검 경과: 205일 · 학생: 353명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_4b1f0bf73f55e6dc1061ad1feed602c4.setContent(html_0ef71b65f4bf64ce980c16850922e6ca);
+            
+        
+
+        circle_marker_5e9293d5571979bc639e63c37f2c4739.bindPopup(popup_4b1f0bf73f55e6dc1061ad1feed602c4)
+        ;
+
+        
+    
+    
+            circle_marker_5e9293d5571979bc639e63c37f2c4739.bindTooltip(
+                `<div>
+                     S00059 · 위험도 40.7
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b77b25fcf8ab95dc99dd0c00c4bd914e = L.circleMarker(
+                [36.82195212413125, 128.82247303993879],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_724259dd7ef2632ba32308a6c70a620f = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c72668a3719065a96d43e1434ba20305 = $(`<div id="html_c72668a3719065a96d43e1434ba20305" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00060</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>52.2</b><br>우선순위 점수: <b>279.7</b><br>미관리 영역: 2/6 · 환경 위험: 11<br>점검 경과: 396일 · 학생: 77명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_724259dd7ef2632ba32308a6c70a620f.setContent(html_c72668a3719065a96d43e1434ba20305);
+            
+        
+
+        circle_marker_b77b25fcf8ab95dc99dd0c00c4bd914e.bindPopup(popup_724259dd7ef2632ba32308a6c70a620f)
+        ;
+
+        
+    
+    
+            circle_marker_b77b25fcf8ab95dc99dd0c00c4bd914e.bindTooltip(
+                `<div>
+                     S00060 · 위험도 52.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_987f38f7e80b972eae770b5f2ad59180 = L.circleMarker(
+                [36.43040277997749, 128.19364153962212],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_655d246e2310790d19e93bf671ad3bd3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_ecd361550e63985a1042434dbb6c0fd4 = $(`<div id="html_ecd361550e63985a1042434dbb6c0fd4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00061</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>40.2</b><br>우선순위 점수: <b>279.5</b><br>미관리 영역: 2/6 · 환경 위험: 9<br>점검 경과: 170일 · 학생: 386명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_655d246e2310790d19e93bf671ad3bd3.setContent(html_ecd361550e63985a1042434dbb6c0fd4);
+            
+        
+
+        circle_marker_987f38f7e80b972eae770b5f2ad59180.bindPopup(popup_655d246e2310790d19e93bf671ad3bd3)
+        ;
+
+        
+    
+    
+            circle_marker_987f38f7e80b972eae770b5f2ad59180.bindTooltip(
+                `<div>
+                     S00061 · 위험도 40.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f2cd1adb17e01c2ffc8ac5b851d94405 = L.circleMarker(
+                [35.499848130033556, 127.094686230901],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_0ad51069c12289c1cb59d4abc1d0d6cc = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_336b0f5cc4333c7dfb5e5394880230c9 = $(`<div id="html_336b0f5cc4333c7dfb5e5394880230c9" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00062</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.6</b><br>우선순위 점수: <b>278.3</b><br>미관리 영역: 2/6 · 환경 위험: 7<br>점검 경과: 184일 · 학생: 495명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_0ad51069c12289c1cb59d4abc1d0d6cc.setContent(html_336b0f5cc4333c7dfb5e5394880230c9);
+            
+        
+
+        circle_marker_f2cd1adb17e01c2ffc8ac5b851d94405.bindPopup(popup_0ad51069c12289c1cb59d4abc1d0d6cc)
+        ;
+
+        
+    
+    
+            circle_marker_f2cd1adb17e01c2ffc8ac5b851d94405.bindTooltip(
+                `<div>
+                     S00062 · 위험도 38.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4dc5057cf148b9e65bb03663cebb230c = L.circleMarker(
+                [37.82091181273799, 127.26658446660507],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_e257fddc8059f945b465a6e44564fbe7 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_a68b39ed05ff0e172f0f2b4a46e8b3c1 = $(`<div id="html_a68b39ed05ff0e172f0f2b4a46e8b3c1" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00063</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.5</b><br>우선순위 점수: <b>278.1</b><br>미관리 영역: 0/6 · 환경 위험: 40<br>점검 경과: 147일 · 학생: 609명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_e257fddc8059f945b465a6e44564fbe7.setContent(html_a68b39ed05ff0e172f0f2b4a46e8b3c1);
+            
+        
+
+        circle_marker_4dc5057cf148b9e65bb03663cebb230c.bindPopup(popup_e257fddc8059f945b465a6e44564fbe7)
+        ;
+
+        
+    
+    
+            circle_marker_4dc5057cf148b9e65bb03663cebb230c.bindTooltip(
+                `<div>
+                     S00063 · 위험도 37.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_244c4ecdff7b7d40a82c032d91b606fd = L.circleMarker(
+                [37.17206170442495, 126.98659784206205],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_475e92f31a862563ff73dc90ba7e96ac = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c394e4cde692e7d71855bd86635c01f4 = $(`<div id="html_c394e4cde692e7d71855bd86635c01f4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00064</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.3</b><br>우선순위 점수: <b>277.7</b><br>미관리 영역: 2/6 · 환경 위험: 8<br>점검 경과: 130일 · 학생: 626명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_475e92f31a862563ff73dc90ba7e96ac.setContent(html_c394e4cde692e7d71855bd86635c01f4);
+            
+        
+
+        circle_marker_244c4ecdff7b7d40a82c032d91b606fd.bindPopup(popup_475e92f31a862563ff73dc90ba7e96ac)
+        ;
+
+        
+    
+    
+            circle_marker_244c4ecdff7b7d40a82c032d91b606fd.bindTooltip(
+                `<div>
+                     S00064 · 위험도 37.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_568a194e1486dd87afeae52595199479 = L.circleMarker(
+                [35.17222880251902, 128.4701862483766],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_33e481a9c16d22be60284bd59a70df8c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_acf3c917003f8682ea894fdfa3dbe267 = $(`<div id="html_acf3c917003f8682ea894fdfa3dbe267" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00065</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경상남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.1</b><br>우선순위 점수: <b>277.4</b><br>미관리 영역: 1/6 · 환경 위험: 12<br>점검 경과: 260일 · 학생: 442명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_33e481a9c16d22be60284bd59a70df8c.setContent(html_acf3c917003f8682ea894fdfa3dbe267);
+            
+        
+
+        circle_marker_568a194e1486dd87afeae52595199479.bindPopup(popup_33e481a9c16d22be60284bd59a70df8c)
+        ;
+
+        
+    
+    
+            circle_marker_568a194e1486dd87afeae52595199479.bindTooltip(
+                `<div>
+                     S00065 · 위험도 39.1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f893b9c87a11e76551f02dab424e9b2a = L.circleMarker(
+                [37.262392293866945, 126.84809213712289],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_a156de05b35b5a8597663365c51460ad = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_48115f92878bf9cda69dd3cbf7aba4fc = $(`<div id="html_48115f92878bf9cda69dd3cbf7aba4fc" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00066</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.6</b><br>우선순위 점수: <b>277.1</b><br>미관리 영역: 1/6 · 환경 위험: 21<br>점검 경과: 135일 · 학생: 483명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_a156de05b35b5a8597663365c51460ad.setContent(html_48115f92878bf9cda69dd3cbf7aba4fc);
+            
+        
+
+        circle_marker_f893b9c87a11e76551f02dab424e9b2a.bindPopup(popup_a156de05b35b5a8597663365c51460ad)
+        ;
+
+        
+    
+    
+            circle_marker_f893b9c87a11e76551f02dab424e9b2a.bindTooltip(
+                `<div>
+                     S00066 · 위험도 38.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_34d10d1973610215ae3f56543c57852f = L.circleMarker(
+                [37.76812776313002, 127.3768623456166],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_48687ba7e1c218a36780e87cc9800234 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_0384df7347c6cc77fb69542591aa6637 = $(`<div id="html_0384df7347c6cc77fb69542591aa6637" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00067</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>33.4</b><br>우선순위 점수: <b>277.1</b><br>미관리 영역: 0/6 · 환경 위험: 19<br>점검 경과: 211일 · 학생: 1484명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_48687ba7e1c218a36780e87cc9800234.setContent(html_0384df7347c6cc77fb69542591aa6637);
+            
+        
+
+        circle_marker_34d10d1973610215ae3f56543c57852f.bindPopup(popup_48687ba7e1c218a36780e87cc9800234)
+        ;
+
+        
+    
+    
+            circle_marker_34d10d1973610215ae3f56543c57852f.bindTooltip(
+                `<div>
+                     S00067 · 위험도 33.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_eedbb8aee667d50ef8cb2ec5dc0be0a4 = L.circleMarker(
+                [37.58153249739469, 127.14041516711613],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_902b14a1eb71fcb900272cfe94d325f9 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_9f361c24ecfd79b4fbcee7c339d5e48d = $(`<div id="html_9f361c24ecfd79b4fbcee7c339d5e48d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00068</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.6</b><br>우선순위 점수: <b>276.7</b><br>미관리 영역: 2/6 · 환경 위험: 8<br>점검 경과: 136일 · 학생: 578명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_902b14a1eb71fcb900272cfe94d325f9.setContent(html_9f361c24ecfd79b4fbcee7c339d5e48d);
+            
+        
+
+        circle_marker_eedbb8aee667d50ef8cb2ec5dc0be0a4.bindPopup(popup_902b14a1eb71fcb900272cfe94d325f9)
+        ;
+
+        
+    
+    
+            circle_marker_eedbb8aee667d50ef8cb2ec5dc0be0a4.bindTooltip(
+                `<div>
+                     S00068 · 위험도 37.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b85e6ddcc9668a20947f612b84591909 = L.circleMarker(
+                [37.457403681903436, 127.35542566617676],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_056729da424429dd4f8bc3c0a49d1db6 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_09d419895e42654ac9cdbf0e7a040f13 = $(`<div id="html_09d419895e42654ac9cdbf0e7a040f13" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00069</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.4</b><br>우선순위 점수: <b>276.2</b><br>미관리 영역: 2/6 · 환경 위험: 9<br>점검 경과: 131일 · 학생: 489명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_056729da424429dd4f8bc3c0a49d1db6.setContent(html_09d419895e42654ac9cdbf0e7a040f13);
+            
+        
+
+        circle_marker_b85e6ddcc9668a20947f612b84591909.bindPopup(popup_056729da424429dd4f8bc3c0a49d1db6)
+        ;
+
+        
+    
+    
+            circle_marker_b85e6ddcc9668a20947f612b84591909.bindTooltip(
+                `<div>
+                     S00069 · 위험도 38.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3ce9f1f3648ab1d396b5f143a9f14ee5 = L.circleMarker(
+                [37.93645783595369, 126.77942583666028],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_2195d1e21596c42d4bbc4dc9fbe4ef17 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_f8f6a9041cd9b70c562d7e79e54d7e00 = $(`<div id="html_f8f6a9041cd9b70c562d7e79e54d7e00" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00070</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>36.6</b><br>우선순위 점수: <b>276.1</b><br>미관리 영역: 1/6 · 환경 위험: 18<br>점검 경과: 123일 · 학생: 693명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_2195d1e21596c42d4bbc4dc9fbe4ef17.setContent(html_f8f6a9041cd9b70c562d7e79e54d7e00);
+            
+        
+
+        circle_marker_3ce9f1f3648ab1d396b5f143a9f14ee5.bindPopup(popup_2195d1e21596c42d4bbc4dc9fbe4ef17)
+        ;
+
+        
+    
+    
+            circle_marker_3ce9f1f3648ab1d396b5f143a9f14ee5.bindTooltip(
+                `<div>
+                     S00070 · 위험도 36.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_97b670b672b9f81509df12afd2b79f5a = L.circleMarker(
+                [37.41159880471391, 127.35900264785342],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_2c74cebdf3c68d6b25ad5c8a4a5fdd34 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_6057c66d41d561f28d9287ca00f03ee1 = $(`<div id="html_6057c66d41d561f28d9287ca00f03ee1" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00071</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>50.5</b><br>우선순위 점수: <b>275.9</b><br>미관리 영역: 3/6 · 환경 위험: 13<br>점검 경과: 154일 · 학생: 86명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_2c74cebdf3c68d6b25ad5c8a4a5fdd34.setContent(html_6057c66d41d561f28d9287ca00f03ee1);
+            
+        
+
+        circle_marker_97b670b672b9f81509df12afd2b79f5a.bindPopup(popup_2c74cebdf3c68d6b25ad5c8a4a5fdd34)
+        ;
+
+        
+    
+    
+            circle_marker_97b670b672b9f81509df12afd2b79f5a.bindTooltip(
+                `<div>
+                     S00071 · 위험도 50.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c5380194ad93407992fd06e2391e7d5d = L.circleMarker(
+                [35.06617239550198, 128.32200955788363],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_fcdb3d9bac6eafb64b59c2a33185371b = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_68eed7d8f8d6dd15ed18d847128d12bb = $(`<div id="html_68eed7d8f8d6dd15ed18d847128d12bb" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00072</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>경상남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>34.5</b><br>우선순위 점수: <b>275.7</b><br>미관리 영역: 0/6 · 환경 위험: 23<br>점검 경과: 197일 · 학생: 1079명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_fcdb3d9bac6eafb64b59c2a33185371b.setContent(html_68eed7d8f8d6dd15ed18d847128d12bb);
+            
+        
+
+        circle_marker_c5380194ad93407992fd06e2391e7d5d.bindPopup(popup_fcdb3d9bac6eafb64b59c2a33185371b)
+        ;
+
+        
+    
+    
+            circle_marker_c5380194ad93407992fd06e2391e7d5d.bindTooltip(
+                `<div>
+                     S00072 · 위험도 34.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_eb41d3a1fef51e0cd9c983b3468c7579 = L.circleMarker(
+                [37.50145146718392, 127.52044321858308],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_b2b93b53bf796c4efa90e962d76779dd = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_ee4636652bde33332a0e81e405dfd234 = $(`<div id="html_ee4636652bde33332a0e81e405dfd234" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00073</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>49.6</b><br>우선순위 점수: <b>274.8</b><br>미관리 영역: 3/6 · 환경 위험: 9<br>점검 경과: 207일 · 학생: 93명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_b2b93b53bf796c4efa90e962d76779dd.setContent(html_ee4636652bde33332a0e81e405dfd234);
+            
+        
+
+        circle_marker_eb41d3a1fef51e0cd9c983b3468c7579.bindPopup(popup_b2b93b53bf796c4efa90e962d76779dd)
+        ;
+
+        
+    
+    
+            circle_marker_eb41d3a1fef51e0cd9c983b3468c7579.bindTooltip(
+                `<div>
+                     S00073 · 위험도 49.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e7ce0c70ffbfe90211b23cf770263848 = L.circleMarker(
+                [37.20768300099999, 126.80091717138929],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_1bede1d01afde68c910f56c978034d75 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_ffa004409c9c644964142c32abba9fee = $(`<div id="html_ffa004409c9c644964142c32abba9fee" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00074</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>33.2</b><br>우선순위 점수: <b>274.8</b><br>미관리 영역: 1/6 · 환경 위험: 12<br>점검 경과: 129일 · 학생: 1461명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_1bede1d01afde68c910f56c978034d75.setContent(html_ffa004409c9c644964142c32abba9fee);
+            
+        
+
+        circle_marker_e7ce0c70ffbfe90211b23cf770263848.bindPopup(popup_1bede1d01afde68c910f56c978034d75)
+        ;
+
+        
+    
+    
+            circle_marker_e7ce0c70ffbfe90211b23cf770263848.bindTooltip(
+                `<div>
+                     S00074 · 위험도 33.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fffc97dab11317f01b6b234fd4854db8 = L.circleMarker(
+                [37.89311270877332, 126.76964951253358],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_9eb3a559ad1af7fc763c8b5f8b14123d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_97fc481dc6f955e3339b09657486cc9a = $(`<div id="html_97fc481dc6f955e3339b09657486cc9a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00075</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.2</b><br>우선순위 점수: <b>274.5</b><br>미관리 영역: 1/6 · 환경 위험: 19<br>점검 경과: 147일 · 학생: 485명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_9eb3a559ad1af7fc763c8b5f8b14123d.setContent(html_97fc481dc6f955e3339b09657486cc9a);
+            
+        
+
+        circle_marker_fffc97dab11317f01b6b234fd4854db8.bindPopup(popup_9eb3a559ad1af7fc763c8b5f8b14123d)
+        ;
+
+        
+    
+    
+            circle_marker_fffc97dab11317f01b6b234fd4854db8.bindTooltip(
+                `<div>
+                     S00075 · 위험도 38.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6c73f77e69a8f9b7b04d8f9f3d17f9ca = L.circleMarker(
+                [36.29191589767298, 128.49716220822205],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_1f7d781ab6f4c3c21246b443cbde304f = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_f627e0d41dfd8705f4f14aeabc012715 = $(`<div id="html_f627e0d41dfd8705f4f14aeabc012715" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00076</b> · 고 · 공립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>50.9</b><br>우선순위 점수: <b>274.4</b><br>미관리 영역: 3/6 · 환경 위험: 15<br>점검 경과: 134일 · 학생: 80명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_1f7d781ab6f4c3c21246b443cbde304f.setContent(html_f627e0d41dfd8705f4f14aeabc012715);
+            
+        
+
+        circle_marker_6c73f77e69a8f9b7b04d8f9f3d17f9ca.bindPopup(popup_1f7d781ab6f4c3c21246b443cbde304f)
+        ;
+
+        
+    
+    
+            circle_marker_6c73f77e69a8f9b7b04d8f9f3d17f9ca.bindTooltip(
+                `<div>
+                     S00076 · 위험도 50.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0b40673fb7e0bfb669b52958e2e13843 = L.circleMarker(
+                [35.56812036328848, 128.8692442172092],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_7d2ec9e54b04ebf6df927190f7a1a865 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_7cd36847879322036c68dcd59032c477 = $(`<div id="html_7cd36847879322036c68dcd59032c477" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00077</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>부산광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.5</b><br>우선순위 점수: <b>274.3</b><br>미관리 영역: 0/6 · 환경 위험: 11<br>점검 경과: 434일 · 학생: 457명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_7d2ec9e54b04ebf6df927190f7a1a865.setContent(html_7cd36847879322036c68dcd59032c477);
+            
+        
+
+        circle_marker_0b40673fb7e0bfb669b52958e2e13843.bindPopup(popup_7d2ec9e54b04ebf6df927190f7a1a865)
+        ;
+
+        
+    
+    
+            circle_marker_0b40673fb7e0bfb669b52958e2e13843.bindTooltip(
+                `<div>
+                     S00077 · 위험도 38.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a6ac3515e7c0e6a6670639db88506741 = L.circleMarker(
+                [34.9538084379247, 126.67229569226296],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_5842adfe3c04bb25f36bb592dbb7f4fe = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_fef82f8cbc6bafe8c993df4265ad955d = $(`<div id="html_fef82f8cbc6bafe8c993df4265ad955d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00078</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전라남도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.7</b><br>우선순위 점수: <b>273.8</b><br>미관리 영역: 2/6 · 환경 위험: 8<br>점검 경과: 138일 · 학생: 526명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_5842adfe3c04bb25f36bb592dbb7f4fe.setContent(html_fef82f8cbc6bafe8c993df4265ad955d);
+            
+        
+
+        circle_marker_a6ac3515e7c0e6a6670639db88506741.bindPopup(popup_5842adfe3c04bb25f36bb592dbb7f4fe)
+        ;
+
+        
+    
+    
+            circle_marker_a6ac3515e7c0e6a6670639db88506741.bindTooltip(
+                `<div>
+                     S00078 · 위험도 37.7
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_36186c5f1527af0c86b59fd54aa2d704 = L.circleMarker(
+                [35.50761003519392, 127.3355730788895],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_dcaad39f2da468257d256f8806ec0293 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_45f6e7740340ced05859aab89e37cbd3 = $(`<div id="html_45f6e7740340ced05859aab89e37cbd3" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00079</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>53.5</b><br>우선순위 점수: <b>273.4</b><br>미관리 영역: 4/6 · 환경 위험: 9<br>점검 경과: 123일 · 학생: 60명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_dcaad39f2da468257d256f8806ec0293.setContent(html_45f6e7740340ced05859aab89e37cbd3);
+            
+        
+
+        circle_marker_36186c5f1527af0c86b59fd54aa2d704.bindPopup(popup_dcaad39f2da468257d256f8806ec0293)
+        ;
+
+        
+    
+    
+            circle_marker_36186c5f1527af0c86b59fd54aa2d704.bindTooltip(
+                `<div>
+                     S00079 · 위험도 53.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6227e62472d565c2aee0f6e7af5d6ce5 = L.circleMarker(
+                [36.2446265061754, 127.49034466447486],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_5f4e9cb0d431c1ce997c338d9c054b9c = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_1b26a413b58b56ae0c3d5a3b23a1c891 = $(`<div id="html_1b26a413b58b56ae0c3d5a3b23a1c891" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00080</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>대전광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>42.0</b><br>우선순위 점수: <b>273.3</b><br>미관리 영역: 2/6 · 환경 위험: 14<br>점검 경과: 123일 · 학생: 245명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_5f4e9cb0d431c1ce997c338d9c054b9c.setContent(html_1b26a413b58b56ae0c3d5a3b23a1c891);
+            
+        
+
+        circle_marker_6227e62472d565c2aee0f6e7af5d6ce5.bindPopup(popup_5f4e9cb0d431c1ce997c338d9c054b9c)
+        ;
+
+        
+    
+    
+            circle_marker_6227e62472d565c2aee0f6e7af5d6ce5.bindTooltip(
+                `<div>
+                     S00080 · 위험도 42.0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5a31fb424f51fd245af8fd667d966dc6 = L.circleMarker(
+                [37.67332376860871, 127.0066197472598],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_fe0a94f4832c62309101bc9bbfd5f030 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_daad9c50f675a1bc74740d2e6d608521 = $(`<div id="html_daad9c50f675a1bc74740d2e6d608521" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00081</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>33.6</b><br>우선순위 점수: <b>272.6</b><br>미관리 영역: 1/6 · 환경 위험: 12<br>점검 경과: 138일 · 학생: 1239명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_fe0a94f4832c62309101bc9bbfd5f030.setContent(html_daad9c50f675a1bc74740d2e6d608521);
+            
+        
+
+        circle_marker_5a31fb424f51fd245af8fd667d966dc6.bindPopup(popup_fe0a94f4832c62309101bc9bbfd5f030)
+        ;
+
+        
+    
+    
+            circle_marker_5a31fb424f51fd245af8fd667d966dc6.bindTooltip(
+                `<div>
+                     S00081 · 위험도 33.6
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4b70eb32124558fe71258fbf7b2e713c = L.circleMarker(
+                [37.12853181604353, 126.9734419964714],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_901d4352ac6c38cd887d177ba0e0f6b0 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_512aa3b9a8a6a2aafe89a2b20f5f1469 = $(`<div id="html_512aa3b9a8a6a2aafe89a2b20f5f1469" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00082</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>인천광역시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.2</b><br>우선순위 점수: <b>272.1</b><br>미관리 영역: 1/6 · 환경 위험: 22<br>점검 경과: 139일 · 학생: 379명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_901d4352ac6c38cd887d177ba0e0f6b0.setContent(html_512aa3b9a8a6a2aafe89a2b20f5f1469);
+            
+        
+
+        circle_marker_4b70eb32124558fe71258fbf7b2e713c.bindPopup(popup_901d4352ac6c38cd887d177ba0e0f6b0)
+        ;
+
+        
+    
+    
+            circle_marker_4b70eb32124558fe71258fbf7b2e713c.bindTooltip(
+                `<div>
+                     S00082 · 위험도 39.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_51b8648b831220cc52068b5ec4f83087 = L.circleMarker(
+                [35.57412405197739, 126.90221480831988],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_c748726d4d71e59396f472ad10df945f = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_1f92f85bd3e35490f42fa2e1a705949e = $(`<div id="html_1f92f85bd3e35490f42fa2e1a705949e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00083</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>34.8</b><br>우선순위 점수: <b>272.0</b><br>미관리 영역: 1/6 · 환경 위험: 10<br>점검 경과: 201일 · 학생: 914명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_c748726d4d71e59396f472ad10df945f.setContent(html_1f92f85bd3e35490f42fa2e1a705949e);
+            
+        
+
+        circle_marker_51b8648b831220cc52068b5ec4f83087.bindPopup(popup_c748726d4d71e59396f472ad10df945f)
+        ;
+
+        
+    
+    
+            circle_marker_51b8648b831220cc52068b5ec4f83087.bindTooltip(
+                `<div>
+                     S00083 · 위험도 34.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a432a03c4eaaa5fdebc20bcc32c186d0 = L.circleMarker(
+                [37.04642011324381, 127.5910143545506],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_2468bd9b9c1ce392c4834766b96bbde3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_0fa19a40441a6d69fa690b861422bb6d = $(`<div id="html_0fa19a40441a6d69fa690b861422bb6d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00084</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>34.8</b><br>우선순위 점수: <b>270.6</b><br>미관리 영역: 1/6 · 환경 위험: 9<br>점검 경과: 221일 · 학생: 885명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_2468bd9b9c1ce392c4834766b96bbde3.setContent(html_0fa19a40441a6d69fa690b861422bb6d);
+            
+        
+
+        circle_marker_a432a03c4eaaa5fdebc20bcc32c186d0.bindPopup(popup_2468bd9b9c1ce392c4834766b96bbde3)
+        ;
+
+        
+    
+    
+            circle_marker_a432a03c4eaaa5fdebc20bcc32c186d0.bindTooltip(
+                `<div>
+                     S00084 · 위험도 34.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3dc1d513b5bb69e28bd44f7809e6777c = L.circleMarker(
+                [37.70855148947383, 126.59127026314228],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_33616bb9ff094d1b20b4deecfdbfce26 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_92767bca4964558e3ba2470853a79daa = $(`<div id="html_92767bca4964558e3ba2470853a79daa" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00085</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.1</b><br>우선순위 점수: <b>270.3</b><br>미관리 영역: 2/6 · 환경 위험: 7<br>점검 경과: 151일 · 학생: 534명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_33616bb9ff094d1b20b4deecfdbfce26.setContent(html_92767bca4964558e3ba2470853a79daa);
+            
+        
+
+        circle_marker_3dc1d513b5bb69e28bd44f7809e6777c.bindPopup(popup_33616bb9ff094d1b20b4deecfdbfce26)
+        ;
+
+        
+    
+    
+            circle_marker_3dc1d513b5bb69e28bd44f7809e6777c.bindTooltip(
+                `<div>
+                     S00085 · 위험도 37.1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_199fc1b30c63490c8a57573d57b920e3 = L.circleMarker(
+                [37.57617444663942, 126.75919662015835],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_f5409249b37443b5b3381710885b4cdc = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_1311618e2d9ad3a387370000829dcb93 = $(`<div id="html_1311618e2d9ad3a387370000829dcb93" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00086</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>35.8</b><br>우선순위 점수: <b>270.1</b><br>미관리 영역: 1/6 · 환경 위험: 15<br>점검 경과: 142일 · 학생: 698명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_f5409249b37443b5b3381710885b4cdc.setContent(html_1311618e2d9ad3a387370000829dcb93);
+            
+        
+
+        circle_marker_199fc1b30c63490c8a57573d57b920e3.bindPopup(popup_f5409249b37443b5b3381710885b4cdc)
+        ;
+
+        
+    
+    
+            circle_marker_199fc1b30c63490c8a57573d57b920e3.bindTooltip(
+                `<div>
+                     S00086 · 위험도 35.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c7f64e3475a1b17f9fbbb4cf54099c84 = L.circleMarker(
+                [36.69213823232756, 128.24509314320397],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_1e7765ba8239b32cb7e958d3e99fa2c7 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_679878f6399a48affd597feac582c36a = $(`<div id="html_679878f6399a48affd597feac582c36a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00087</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.3</b><br>우선순위 점수: <b>269.7</b><br>미관리 영역: 1/6 · 환경 위험: 13<br>점검 경과: 204일 · 학생: 508명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_1e7765ba8239b32cb7e958d3e99fa2c7.setContent(html_679878f6399a48affd597feac582c36a);
+            
+        
+
+        circle_marker_c7f64e3475a1b17f9fbbb4cf54099c84.bindPopup(popup_1e7765ba8239b32cb7e958d3e99fa2c7)
+        ;
+
+        
+    
+    
+            circle_marker_c7f64e3475a1b17f9fbbb4cf54099c84.bindTooltip(
+                `<div>
+                     S00087 · 위험도 37.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_36f96d41bbdb7bc03e3ebd0a138986bc = L.circleMarker(
+                [37.71925019048197, 126.88738827704043],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_6f52f70b3045930cf8c58435a1501a6f = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_110c495a6b635ca727f6773da6e568dd = $(`<div id="html_110c495a6b635ca727f6773da6e568dd" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00088</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>34.9</b><br>우선순위 점수: <b>269.6</b><br>미관리 영역: 1/6 · 환경 위험: 13<br>점검 경과: 152일 · 학생: 827명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_6f52f70b3045930cf8c58435a1501a6f.setContent(html_110c495a6b635ca727f6773da6e568dd);
+            
+        
+
+        circle_marker_36f96d41bbdb7bc03e3ebd0a138986bc.bindPopup(popup_6f52f70b3045930cf8c58435a1501a6f)
+        ;
+
+        
+    
+    
+            circle_marker_36f96d41bbdb7bc03e3ebd0a138986bc.bindTooltip(
+                `<div>
+                     S00088 · 위험도 34.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_12803e18e051cb802f6bf373cef50072 = L.circleMarker(
+                [37.76318399098939, 127.2283167553168],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_6b5d90ec4dfe2ca48a7c8e6a9b7047e5 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_c53e6bedf8c10c6c1ec3496288c65024 = $(`<div id="html_c53e6bedf8c10c6c1ec3496288c65024" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00089</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>경기도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>40.5</b><br>우선순위 점수: <b>268.9</b><br>미관리 영역: 1/6 · 환경 위험: 19<br>점검 경과: 197일 · 학생: 282명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_6b5d90ec4dfe2ca48a7c8e6a9b7047e5.setContent(html_c53e6bedf8c10c6c1ec3496288c65024);
+            
+        
+
+        circle_marker_12803e18e051cb802f6bf373cef50072.bindPopup(popup_6b5d90ec4dfe2ca48a7c8e6a9b7047e5)
+        ;
+
+        
+    
+    
+            circle_marker_12803e18e051cb802f6bf373cef50072.bindTooltip(
+                `<div>
+                     S00089 · 위험도 40.5
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b4a3c75c4e454cb25257bc3e2512faa4 = L.circleMarker(
+                [37.439353080840206, 126.66877881699247],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_937e97c58265431ec19eef64750fddcb = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_de88dcb8ad06785f5d173fced81df403 = $(`<div id="html_de88dcb8ad06785f5d173fced81df403" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00090</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.7</b><br>우선순위 점수: <b>267.6</b><br>미관리 영역: 1/6 · 환경 위험: 19<br>점검 경과: 136일 · 학생: 445명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_937e97c58265431ec19eef64750fddcb.setContent(html_de88dcb8ad06785f5d173fced81df403);
+            
+        
+
+        circle_marker_b4a3c75c4e454cb25257bc3e2512faa4.bindPopup(popup_937e97c58265431ec19eef64750fddcb)
+        ;
+
+        
+    
+    
+            circle_marker_b4a3c75c4e454cb25257bc3e2512faa4.bindTooltip(
+                `<div>
+                     S00090 · 위험도 37.7
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d811abe1ec86887c22082a9cb49b289c = L.circleMarker(
+                [36.91575489462285, 128.80747148270478],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_9dd359d42b89f10675fef563da6ba070 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_47c4f816ac64d699d011b3862a2dc228 = $(`<div id="html_47c4f816ac64d699d011b3862a2dc228" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00091</b> · 중 · 사립<br><span style='color:#666;font-size:11px;'>경상북도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>38.8</b><br>우선순위 점수: <b>267.1</b><br>미관리 영역: 2/6 · 환경 위험: 6<br>점검 경과: 217일 · 학생: 358명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_9dd359d42b89f10675fef563da6ba070.setContent(html_47c4f816ac64d699d011b3862a2dc228);
+            
+        
+
+        circle_marker_d811abe1ec86887c22082a9cb49b289c.bindPopup(popup_9dd359d42b89f10675fef563da6ba070)
+        ;
+
+        
+    
+    
+            circle_marker_d811abe1ec86887c22082a9cb49b289c.bindTooltip(
+                `<div>
+                     S00091 · 위험도 38.8
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9fc4ab84392babe55503ea3a95f125d4 = L.circleMarker(
+                [37.372853302172125, 127.10598723682733],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_f7da0b956f647902165c7bbaa443e769 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b2769abb2edf55d50b3ace6caab0b486 = $(`<div id="html_b2769abb2edf55d50b3ace6caab0b486" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00092</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>32.4</b><br>우선순위 점수: <b>266.9</b><br>미관리 영역: 1/6 · 환경 위험: 10<br>점검 경과: 149일 · 학생: 1383명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_f7da0b956f647902165c7bbaa443e769.setContent(html_b2769abb2edf55d50b3ace6caab0b486);
+            
+        
+
+        circle_marker_9fc4ab84392babe55503ea3a95f125d4.bindPopup(popup_f7da0b956f647902165c7bbaa443e769)
+        ;
+
+        
+    
+    
+            circle_marker_9fc4ab84392babe55503ea3a95f125d4.bindTooltip(
+                `<div>
+                     S00092 · 위험도 32.4
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_18f1af65098f71ae5680122da1ab4e3c = L.circleMarker(
+                [37.82027776016097, 127.02216064927957],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_5d0ef778898c3480d73e759a83d0c390 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d7a359eece61b5fe93e73b5c9fed9af6 = $(`<div id="html_d7a359eece61b5fe93e73b5c9fed9af6" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00093</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>37.2</b><br>우선순위 점수: <b>265.6</b><br>미관리 영역: 2/6 · 환경 위험: 8<br>점검 경과: 127일 · 학생: 465명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_5d0ef778898c3480d73e759a83d0c390.setContent(html_d7a359eece61b5fe93e73b5c9fed9af6);
+            
+        
+
+        circle_marker_18f1af65098f71ae5680122da1ab4e3c.bindPopup(popup_5d0ef778898c3480d73e759a83d0c390)
+        ;
+
+        
+    
+    
+            circle_marker_18f1af65098f71ae5680122da1ab4e3c.bindTooltip(
+                `<div>
+                     S00093 · 위험도 37.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0bbc29659e310ce465b98b4f49b28a6c = L.circleMarker(
+                [37.590220462684805, 126.77148183272035],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_09b99048c85bda68c77731f7889414d0 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_91d9f70a48145fb03a402ae781ec3664 = $(`<div id="html_91d9f70a48145fb03a402ae781ec3664" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00094</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>35.9</b><br>우선순위 점수: <b>264.8</b><br>미관리 영역: 1/6 · 환경 위험: 14<br>점검 경과: 158일 · 학생: 590명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_09b99048c85bda68c77731f7889414d0.setContent(html_91d9f70a48145fb03a402ae781ec3664);
+            
+        
+
+        circle_marker_0bbc29659e310ce465b98b4f49b28a6c.bindPopup(popup_09b99048c85bda68c77731f7889414d0)
+        ;
+
+        
+    
+    
+            circle_marker_0bbc29659e310ce465b98b4f49b28a6c.bindTooltip(
+                `<div>
+                     S00094 · 위험도 35.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b90503fd32a4b02882459f685a88a252 = L.circleMarker(
+                [35.39198221424472, 127.47077260636267],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_64685877970c5f102b0340023585276d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_4ccdc7d1401d922965c522e6738aec67 = $(`<div id="html_4ccdc7d1401d922965c522e6738aec67" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00095</b> · 초 · 공립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>35.1</b><br>우선순위 점수: <b>264.7</b><br>미관리 영역: 1/6 · 환경 위험: 10<br>점검 경과: 207일 · 학생: 698명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_64685877970c5f102b0340023585276d.setContent(html_4ccdc7d1401d922965c522e6738aec67);
+            
+        
+
+        circle_marker_b90503fd32a4b02882459f685a88a252.bindPopup(popup_64685877970c5f102b0340023585276d)
+        ;
+
+        
+    
+    
+            circle_marker_b90503fd32a4b02882459f685a88a252.bindTooltip(
+                `<div>
+                     S00095 · 위험도 35.1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_be9af0872154be6601e601a93a6810c4 = L.circleMarker(
+                [37.88683444573066, 127.0844811658186],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_f24d758b8c347f0d3f367678dcc68c3d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_a009ef555c2c8382e9b9c71fb72d501f = $(`<div id="html_a009ef555c2c8382e9b9c71fb72d501f" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00096</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>서울특별시교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>36.9</b><br>우선순위 점수: <b>264.4</b><br>미관리 영역: 1/6 · 환경 위험: 17<br>점검 경과: 142일 · 학생: 472명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_f24d758b8c347f0d3f367678dcc68c3d.setContent(html_a009ef555c2c8382e9b9c71fb72d501f);
+            
+        
+
+        circle_marker_be9af0872154be6601e601a93a6810c4.bindPopup(popup_f24d758b8c347f0d3f367678dcc68c3d)
+        ;
+
+        
+    
+    
+            circle_marker_be9af0872154be6601e601a93a6810c4.bindTooltip(
+                `<div>
+                     S00096 · 위험도 36.9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_97d39731add340a0b42e987924a1feae = L.circleMarker(
+                [35.58872383283896, 127.03236765969014],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_68e9ceb01df9eed2f52cfc68c3f71a20 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_950372d22fddb0199d9a61bda9d15773 = $(`<div id="html_950372d22fddb0199d9a61bda9d15773" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00097</b> · 고 · 사립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>39.3</b><br>우선순위 점수: <b>263.8</b><br>미관리 영역: 1/6 · 환경 위험: 21<br>점검 경과: 151일 · 학생: 301명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_68e9ceb01df9eed2f52cfc68c3f71a20.setContent(html_950372d22fddb0199d9a61bda9d15773);
+            
+        
+
+        circle_marker_97d39731add340a0b42e987924a1feae.bindPopup(popup_68e9ceb01df9eed2f52cfc68c3f71a20)
+        ;
+
+        
+    
+    
+            circle_marker_97d39731add340a0b42e987924a1feae.bindTooltip(
+                `<div>
+                     S00097 · 위험도 39.3
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e2e3b3853318a4465d2b76dcf3b8cc0e = L.circleMarker(
+                [35.89826454309619, 127.47068820796207],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_11dc016e1bfc3e62dda04fb3bff65695 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d781bd3ce873da0ed653771ecc90c084 = $(`<div id="html_d781bd3ce873da0ed653771ecc90c084" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00098</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>전북특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>35.0</b><br>우선순위 점수: <b>263.6</b><br>미관리 영역: 2/6 · 환경 위험: 6<br>점검 경과: 134일 · 학생: 680명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_11dc016e1bfc3e62dda04fb3bff65695.setContent(html_d781bd3ce873da0ed653771ecc90c084);
+            
+        
+
+        circle_marker_e2e3b3853318a4465d2b76dcf3b8cc0e.bindPopup(popup_11dc016e1bfc3e62dda04fb3bff65695)
+        ;
+
+        
+    
+    
+            circle_marker_e2e3b3853318a4465d2b76dcf3b8cc0e.bindTooltip(
+                `<div>
+                     S00098 · 위험도 35.0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b364ea461d4593de41164e3b389a2f3a = L.circleMarker(
+                [38.132469139412095, 128.3794004366861],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 1}
+            ).addTo(marker_cluster_62212b474060be54eea387570dea5d8f);
+        
+    
+        var popup_b9dd4634e17b9caf7c6558e5e70016c4 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_88cce33c76e269b3d5f44d56cfff8926 = $(`<div id="html_88cce33c76e269b3d5f44d56cfff8926" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:200px;'><b>S00099</b> · 중 · 공립<br><span style='color:#666;font-size:11px;'>강원특별자치도교육청</span><hr style='margin:5px 0;'>위험도 점수: <b style='color:#dc2626;'>36.2</b><br>우선순위 점수: <b>263.6</b><br>미관리 영역: 1/6 · 환경 위험: 12<br>점검 경과: 197일 · 학생: 529명<br><span style='color:#999;font-size:10px;'>※ 좌표는 시도 단위 임의 표시(개별 학교 식별 방지)</span></div></div>`)[0];
+                popup_b9dd4634e17b9caf7c6558e5e70016c4.setContent(html_88cce33c76e269b3d5f44d56cfff8926);
+            
+        
+
+        circle_marker_b364ea461d4593de41164e3b389a2f3a.bindPopup(popup_b9dd4634e17b9caf7c6558e5e70016c4)
+        ;
+
+        
+    
+    
+            circle_marker_b364ea461d4593de41164e3b389a2f3a.bindTooltip(
+                `<div>
+                     S00099 · 위험도 36.2
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            marker_cluster_62212b474060be54eea387570dea5d8f.addTo(map_d603ead3abac3f81ed9702f4e72d4dc9);
+        
+</script>
+</html>

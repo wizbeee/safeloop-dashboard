@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_91c496216a3f9f5d82425fd7858a4289 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="position:fixed; bottom:20px; left:20px; z-index:9999; background:white;
+            padding:10px 14px; border:2px solid #ccc; border-radius:6px;
+            font-family:Pretendard,sans-serif; font-size:12px; box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+<b>고위험 비율</b><br>
+<span style="display:inline-block;width:12px;height:12px;background:#dc2626;border-radius:50%;"></span> 높음<br>
+<span style="display:inline-block;width:12px;height:12px;background:#f59e0b;border-radius:50%;"></span> 중간<br>
+<span style="display:inline-block;width:12px;height:12px;background:#10b981;border-radius:50%;"></span> 낮음<br>
+<span style="color:#666;font-size:11px;">원 크기 = 고위험 학교 수</span>
+</div>
+    
+            <div class="folium-map" id="map_91c496216a3f9f5d82425fd7858a4289" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_91c496216a3f9f5d82425fd7858a4289 = L.map(
+                "map_91c496216a3f9f5d82425fd7858a4289",
+                {
+                    center: [36.5, 127.8],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 7,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_bba1fda445a519739e07b4be3318d32e = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_bba1fda445a519739e07b4be3318d32e.addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+            var tile_layer_3a3a25706a3d62bc35e46e6f77d3d7ee = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_3a3a25706a3d62bc35e46e6f77d3d7ee.addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+            var circle_marker_782a4cd0301446e2fd5983203f0a8640 = L.circleMarker(
+                [35.7175, 127.153],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 21.213203435596427, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_6b8db779ce8d3aea6a8def265b6535f3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b3b9fa1506dcc9a41459c45f35b8fe01 = $(`<div id="html_b3b9fa1506dcc9a41459c45f35b8fe01" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>전북특별자치도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>748</b><br>위험도 평균: <b>20.29</b><br>고위험 학교: <b style='color:#dc2626;'>200</b> (26.7%)<br>주의 학교: 291 · 양호 학교: 257<br>미관리 평균: 1.08 · 환경위험 평균: 3.17</div></div>`)[0];
+                popup_6b8db779ce8d3aea6a8def265b6535f3.setContent(html_b3b9fa1506dcc9a41459c45f35b8fe01);
+            
+        
+
+        circle_marker_782a4cd0301446e2fd5983203f0a8640.bindPopup(popup_6b8db779ce8d3aea6a8def265b6535f3)
+        ;
+
+        
+    
+    
+            circle_marker_782a4cd0301446e2fd5983203f0a8640.bindTooltip(
+                `<div>
+                     전북특별자치도교육청 · 고위험 200개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4502f4a0c3516db86bd2cfef2f95eccf = L.circleMarker(
+                [37.8228, 128.1555],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.904141504376966, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_e2a2fc3fa59ddf0540bfb89a6bd59711 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e209825b319abfa0a81c513cd66f6cd0 = $(`<div id="html_e209825b319abfa0a81c513cd66f6cd0" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>강원특별자치도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>629</b><br>위험도 평균: <b>17.89</b><br>고위험 학교: <b style='color:#dc2626;'>127</b> (20.2%)<br>주의 학교: 262 · 양호 학교: 240<br>미관리 평균: 0.87 · 환경위험 평균: 2.87</div></div>`)[0];
+                popup_e2a2fc3fa59ddf0540bfb89a6bd59711.setContent(html_e209825b319abfa0a81c513cd66f6cd0);
+            
+        
+
+        circle_marker_4502f4a0c3516db86bd2cfef2f95eccf.bindPopup(popup_e2a2fc3fa59ddf0540bfb89a6bd59711)
+        ;
+
+        
+    
+    
+            circle_marker_4502f4a0c3516db86bd2cfef2f95eccf.bindTooltip(
+                `<div>
+                     강원특별자치도교육청 · 고위험 127개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3a1f7090350f64566664242d253c2229 = L.circleMarker(
+                [34.8161, 126.463],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18.432308591166763, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_79feb294ad9806ef85ef1eb7930f52f5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_539e3f92b4f067df00aaf0441b972f3a = $(`<div id="html_539e3f92b4f067df00aaf0441b972f3a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>전라남도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>839</b><br>위험도 평균: <b>17.41</b><br>고위험 학교: <b style='color:#dc2626;'>151</b> (18.0%)<br>주의 학교: 366 · 양호 학교: 322<br>미관리 평균: 0.84 · 환경위험 평균: 2.68</div></div>`)[0];
+                popup_79feb294ad9806ef85ef1eb7930f52f5.setContent(html_539e3f92b4f067df00aaf0441b972f3a);
+            
+        
+
+        circle_marker_3a1f7090350f64566664242d253c2229.bindPopup(popup_79feb294ad9806ef85ef1eb7930f52f5)
+        ;
+
+        
+    
+    
+            circle_marker_3a1f7090350f64566664242d253c2229.bindTooltip(
+                `<div>
+                     전라남도교육청 · 고위험 151개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d3d1a91e38cbfa2e63b743d1a2db8c70 = L.circleMarker(
+                [35.1595, 126.8526],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.392304845413264, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_be1d8ef77613cc33c65f5d42ce403ef4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2672ba6bcf5b02334a07ff8da648464d = $(`<div id="html_2672ba6bcf5b02334a07ff8da648464d" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>광주광역시교육청</b><hr style='margin:5px 0;'>전체 학교: <b>314</b><br>위험도 평균: <b>13.52</b><br>고위험 학교: <b style='color:#dc2626;'>48</b> (15.3%)<br>주의 학교: 115 · 양호 학교: 151<br>미관리 평균: 0.62 · 환경위험 평균: 2.02</div></div>`)[0];
+                popup_be1d8ef77613cc33c65f5d42ce403ef4.setContent(html_2672ba6bcf5b02334a07ff8da648464d);
+            
+        
+
+        circle_marker_d3d1a91e38cbfa2e63b743d1a2db8c70.bindPopup(popup_be1d8ef77613cc33c65f5d42ce403ef4)
+        ;
+
+        
+    
+    
+            circle_marker_d3d1a91e38cbfa2e63b743d1a2db8c70.bindTooltip(
+                `<div>
+                     광주광역시교육청 · 고위험 48개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ac87ef4a823cc8cabae4af33ba9fc55c = L.circleMarker(
+                [37.4563, 126.7052],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19.84313483298443, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_ab5954dfdba591219c09733930ad6d62 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2bf00eef4c2840475bb8d88157292b67 = $(`<div id="html_2bf00eef4c2840475bb8d88157292b67" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>인천광역시교육청</b><hr style='margin:5px 0;'>전체 학교: <b>536</b><br>위험도 평균: <b>13.42</b><br>고위험 학교: <b style='color:#dc2626;'>175</b> (32.6%)<br>주의 학교: 178 · 양호 학교: 183<br>미관리 평균: 0.22 · 환경위험 평균: 3.68</div></div>`)[0];
+                popup_ab5954dfdba591219c09733930ad6d62.setContent(html_2bf00eef4c2840475bb8d88157292b67);
+            
+        
+
+        circle_marker_ac87ef4a823cc8cabae4af33ba9fc55c.bindPopup(popup_ab5954dfdba591219c09733930ad6d62)
+        ;
+
+        
+    
+    
+            circle_marker_ac87ef4a823cc8cabae4af33ba9fc55c.bindTooltip(
+                `<div>
+                     인천광역시교육청 · 고위험 175개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a2b44fc0c904fde4bffcfab86ab12bda = L.circleMarker(
+                [36.576, 128.5056],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 21.42428528562855, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_211b51cec3847caeabe9f749158983ef = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_33325bf3e7e86ce1ef4b7270b9f61941 = $(`<div id="html_33325bf3e7e86ce1ef4b7270b9f61941" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>경상북도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>931</b><br>위험도 평균: <b>13.41</b><br>고위험 학교: <b style='color:#dc2626;'>204</b> (21.9%)<br>주의 학교: 191 · 양호 학교: 536<br>미관리 평균: 0.64 · 환경위험 평균: 2.43</div></div>`)[0];
+                popup_211b51cec3847caeabe9f749158983ef.setContent(html_33325bf3e7e86ce1ef4b7270b9f61941);
+            
+        
+
+        circle_marker_a2b44fc0c904fde4bffcfab86ab12bda.bindPopup(popup_211b51cec3847caeabe9f749158983ef)
+        ;
+
+        
+    
+    
+            circle_marker_a2b44fc0c904fde4bffcfab86ab12bda.bindTooltip(
+                `<div>
+                     경상북도교육청 · 고위험 204개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ba06e05d3ba497fc3ee191c4f03f03ba = L.circleMarker(
+                [35.2383, 128.6925],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 22.399776784602118, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_a9806626f696eece6360cbd405fbb235 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_14296bf44700aab95aa4c11c2f1ace9c = $(`<div id="html_14296bf44700aab95aa4c11c2f1ace9c" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>경상남도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>978</b><br>위험도 평균: <b>13.37</b><br>고위험 학교: <b style='color:#dc2626;'>223</b> (22.8%)<br>주의 학교: 266 · 양호 학교: 489<br>미관리 평균: 0.49 · 환경위험 평균: 2.64</div></div>`)[0];
+                popup_a9806626f696eece6360cbd405fbb235.setContent(html_14296bf44700aab95aa4c11c2f1ace9c);
+            
+        
+
+        circle_marker_ba06e05d3ba497fc3ee191c4f03f03ba.bindPopup(popup_a9806626f696eece6360cbd405fbb235)
+        ;
+
+        
+    
+    
+            circle_marker_ba06e05d3ba497fc3ee191c4f03f03ba.bindTooltip(
+                `<div>
+                     경상남도교육청 · 고위험 223개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e78ccde92808bbb104a8207585819ea2 = L.circleMarker(
+                [35.5384, 129.3114],
+                {"bubblingMouseEvents": true, "color": "#dc2626", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2626", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.5, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_6082afe06510259f93a13b6f4437c40b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5ebcaccd6df6a8d2dee59f9d73b2d15a = $(`<div id="html_5ebcaccd6df6a8d2dee59f9d73b2d15a" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>울산광역시교육청</b><hr style='margin:5px 0;'>전체 학교: <b>241</b><br>위험도 평균: <b>13.23</b><br>고위험 학교: <b style='color:#dc2626;'>81</b> (33.6%)<br>주의 학교: 71 · 양호 학교: 89<br>미관리 평균: 0.13 · 환경위험 평균: 4.02</div></div>`)[0];
+                popup_6082afe06510259f93a13b6f4437c40b.setContent(html_5ebcaccd6df6a8d2dee59f9d73b2d15a);
+            
+        
+
+        circle_marker_e78ccde92808bbb104a8207585819ea2.bindPopup(popup_6082afe06510259f93a13b6f4437c40b)
+        ;
+
+        
+    
+    
+            circle_marker_e78ccde92808bbb104a8207585819ea2.bindTooltip(
+                `<div>
+                     울산광역시교육청 · 고위험 81개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_50ecf6eb25805ec2fb80b9296da5c1e5 = L.circleMarker(
+                [37.5665, 126.978],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 21.319005605327842, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_4074f59aefcb13004eaf6267a955f4af = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2af7f0673f309849d6ff6e01c2d5f968 = $(`<div id="html_2af7f0673f309849d6ff6e01c2d5f968" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>서울특별시교육청</b><hr style='margin:5px 0;'>전체 학교: <b>1,305</b><br>위험도 평균: <b>12.87</b><br>고위험 학교: <b style='color:#dc2626;'>202</b> (15.5%)<br>주의 학교: 422 · 양호 학교: 681<br>미관리 평균: 0.64 · 환경위험 평균: 2.12</div></div>`)[0];
+                popup_4074f59aefcb13004eaf6267a955f4af.setContent(html_2af7f0673f309849d6ff6e01c2d5f968);
+            
+        
+
+        circle_marker_50ecf6eb25805ec2fb80b9296da5c1e5.bindPopup(popup_4074f59aefcb13004eaf6267a955f4af)
+        ;
+
+        
+    
+    
+            circle_marker_50ecf6eb25805ec2fb80b9296da5c1e5.bindTooltip(
+                `<div>
+                     서울특별시교육청 · 고위험 202개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7a9c922d661125089839a7f38960b4b3 = L.circleMarker(
+                [33.4996, 126.5312],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.746427842267952, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_726ffaef3c1290d2e3477ff3d3df80d7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0b44183f74fe92c3c45677d7c773922e = $(`<div id="html_0b44183f74fe92c3c45677d7c773922e" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>제주특별자치도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>193</b><br>위험도 평균: <b>12.84</b><br>고위험 학교: <b style='color:#dc2626;'>34</b> (17.6%)<br>주의 학교: 105 · 양호 학교: 54<br>미관리 평균: 0.17 · 환경위험 평균: 2.92</div></div>`)[0];
+                popup_726ffaef3c1290d2e3477ff3d3df80d7.setContent(html_0b44183f74fe92c3c45677d7c773922e);
+            
+        
+
+        circle_marker_7a9c922d661125089839a7f38960b4b3.bindPopup(popup_726ffaef3c1290d2e3477ff3d3df80d7)
+        ;
+
+        
+    
+    
+            circle_marker_7a9c922d661125089839a7f38960b4b3.bindTooltip(
+                `<div>
+                     제주특별자치도교육청 · 고위험 34개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f7f1a67ae19552ccad2f030cbd2c7b5a = L.circleMarker(
+                [36.6588, 126.6728],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.416407864998739, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_2f98a4fe42d98ec0db7c11bc465478a6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_401bed004740c4d675f467e029386957 = $(`<div id="html_401bed004740c4d675f467e029386957" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>충청남도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>708</b><br>위험도 평균: <b>12.81</b><br>고위험 학교: <b style='color:#dc2626;'>80</b> (11.3%)<br>주의 학교: 230 · 양호 학교: 398<br>미관리 평균: 0.68 · 환경위험 평균: 1.68</div></div>`)[0];
+                popup_2f98a4fe42d98ec0db7c11bc465478a6.setContent(html_401bed004740c4d675f467e029386957);
+            
+        
+
+        circle_marker_f7f1a67ae19552ccad2f030cbd2c7b5a.bindPopup(popup_2f98a4fe42d98ec0db7c11bc465478a6)
+        ;
+
+        
+    
+    
+            circle_marker_f7f1a67ae19552ccad2f030cbd2c7b5a.bindTooltip(
+                `<div>
+                     충청남도교육청 · 고위험 80개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c9c20440e0deb329e00dc140897b28d6 = L.circleMarker(
+                [36.6357, 127.4914],
+                {"bubblingMouseEvents": true, "color": "#10b981", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#10b981", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_ffa58a5566accde2ae2fb29dcdf99402 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_abc1bd5b3a3b32db2fd3822a95eaada4 = $(`<div id="html_abc1bd5b3a3b32db2fd3822a95eaada4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>충청북도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>475</b><br>위험도 평균: <b>12.75</b><br>고위험 학교: <b style='color:#dc2626;'>28</b> (5.9%)<br>주의 학교: 175 · 양호 학교: 272<br>미관리 평균: 0.77 · 환경위험 평균: 1.44</div></div>`)[0];
+                popup_ffa58a5566accde2ae2fb29dcdf99402.setContent(html_abc1bd5b3a3b32db2fd3822a95eaada4);
+            
+        
+
+        circle_marker_c9c20440e0deb329e00dc140897b28d6.bindPopup(popup_ffa58a5566accde2ae2fb29dcdf99402)
+        ;
+
+        
+    
+    
+            circle_marker_c9c20440e0deb329e00dc140897b28d6.bindTooltip(
+                `<div>
+                     충청북도교육청 · 고위험 28개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7e8626c8d619f732f9ac4c7d3614a269 = L.circleMarker(
+                [37.4138, 127.5183],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 27.577164466275352, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_28cc43227d9aaf7907e1b071cd687a1e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2aa716a25c29f569408b89e3f072347c = $(`<div id="html_2aa716a25c29f569408b89e3f072347c" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>경기도교육청</b><hr style='margin:5px 0;'>전체 학교: <b>2,474</b><br>위험도 평균: <b>10.90</b><br>고위험 학교: <b style='color:#dc2626;'>338</b> (13.7%)<br>주의 학교: 807 · 양호 학교: 1329<br>미관리 평균: 0.36 · 환경위험 평균: 2.00</div></div>`)[0];
+                popup_28cc43227d9aaf7907e1b071cd687a1e.setContent(html_2aa716a25c29f569408b89e3f072347c);
+            
+        
+
+        circle_marker_7e8626c8d619f732f9ac4c7d3614a269.bindPopup(popup_28cc43227d9aaf7907e1b071cd687a1e)
+        ;
+
+        
+    
+    
+            circle_marker_7e8626c8d619f732f9ac4c7d3614a269.bindTooltip(
+                `<div>
+                     경기도교육청 · 고위험 338개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0c5a6c4d6a13e5489cad2d82de2bfe12 = L.circleMarker(
+                [36.3504, 127.3845],
+                {"bubblingMouseEvents": true, "color": "#f59e0b", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#f59e0b", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.124297730643494, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_395f4e789365628befca891bc2b0a028 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d756544de22a65232a09d5661ff4be66 = $(`<div id="html_d756544de22a65232a09d5661ff4be66" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>대전광역시교육청</b><hr style='margin:5px 0;'>전체 학교: <b>302</b><br>위험도 평균: <b>8.07</b><br>고위험 학교: <b style='color:#dc2626;'>55</b> (18.2%)<br>주의 학교: 74 · 양호 학교: 173<br>미관리 평균: 0.11 · 환경위험 평균: 2.15</div></div>`)[0];
+                popup_395f4e789365628befca891bc2b0a028.setContent(html_d756544de22a65232a09d5661ff4be66);
+            
+        
+
+        circle_marker_0c5a6c4d6a13e5489cad2d82de2bfe12.bindPopup(popup_395f4e789365628befca891bc2b0a028)
+        ;
+
+        
+    
+    
+            circle_marker_0c5a6c4d6a13e5489cad2d82de2bfe12.bindTooltip(
+                `<div>
+                     대전광역시교육청 · 고위험 55개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b70fdbff34e75fb524e09be2e9e21e81 = L.circleMarker(
+                [35.8714, 128.6014],
+                {"bubblingMouseEvents": true, "color": "#10b981", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#10b981", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.874119674649425, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_5ec44a9c019bff0277adbeacdb83594e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_25af288bbba0bed962c67103c0001956 = $(`<div id="html_25af288bbba0bed962c67103c0001956" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>대구광역시교육청</b><hr style='margin:5px 0;'>전체 학교: <b>460</b><br>위험도 평균: <b>7.79</b><br>고위험 학교: <b style='color:#dc2626;'>35</b> (7.6%)<br>주의 학교: 117 · 양호 학교: 308<br>미관리 평균: 0.32 · 환경위험 평균: 1.18</div></div>`)[0];
+                popup_5ec44a9c019bff0277adbeacdb83594e.setContent(html_25af288bbba0bed962c67103c0001956);
+            
+        
+
+        circle_marker_b70fdbff34e75fb524e09be2e9e21e81.bindPopup(popup_5ec44a9c019bff0277adbeacdb83594e)
+        ;
+
+        
+    
+    
+            circle_marker_b70fdbff34e75fb524e09be2e9e21e81.bindTooltip(
+                `<div>
+                     대구광역시교육청 · 고위험 35개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_57f378efe43f87ad6f8f94919b13d9f1 = L.circleMarker(
+                [35.1796, 129.0756],
+                {"bubblingMouseEvents": true, "color": "#10b981", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#10b981", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.920164833920778, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_f3e57c3896e6287edc9b8467c3ac86a7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8359f9688185febad3f3208b70c263fd = $(`<div id="html_8359f9688185febad3f3208b70c263fd" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>부산광역시교육청</b><hr style='margin:5px 0;'>전체 학교: <b>610</b><br>위험도 평균: <b>7.56</b><br>고위험 학교: <b style='color:#dc2626;'>53</b> (8.7%)<br>주의 학교: 190 · 양호 학교: 367<br>미관리 평균: 0.14 · 환경위험 평균: 1.34</div></div>`)[0];
+                popup_f3e57c3896e6287edc9b8467c3ac86a7.setContent(html_8359f9688185febad3f3208b70c263fd);
+            
+        
+
+        circle_marker_57f378efe43f87ad6f8f94919b13d9f1.bindPopup(popup_f3e57c3896e6287edc9b8467c3ac86a7)
+        ;
+
+        
+    
+    
+            circle_marker_57f378efe43f87ad6f8f94919b13d9f1.bindTooltip(
+                `<div>
+                     부산광역시교육청 · 고위험 53개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c54c25b0f5368c998f7358ddbc715f90 = L.circleMarker(
+                [36.48, 127.289],
+                {"bubblingMouseEvents": true, "color": "#10b981", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#10b981", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 2}
+            ).addTo(map_91c496216a3f9f5d82425fd7858a4289);
+        
+    
+        var popup_aed86f00bec3e2a61eabd1886065dc6b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_02a846b899a0723670c361718671d2b4 = $(`<div id="html_02a846b899a0723670c361718671d2b4" style="width: 100.0%; height: 100.0%;"><div style='font-family:Pretendard,sans-serif;font-size:13px;min-width:220px;'><b style='font-size:15px;'>세종특별자치시교육청</b><hr style='margin:5px 0;'>전체 학교: <b>100</b><br>위험도 평균: <b>5.79</b><br>고위험 학교: <b style='color:#dc2626;'>0</b> (0.0%)<br>주의 학교: 40 · 양호 학교: 60<br>미관리 평균: 0.15 · 환경위험 평균: 0.59</div></div>`)[0];
+                popup_aed86f00bec3e2a61eabd1886065dc6b.setContent(html_02a846b899a0723670c361718671d2b4);
+            
+        
+
+        circle_marker_c54c25b0f5368c998f7358ddbc715f90.bindPopup(popup_aed86f00bec3e2a61eabd1886065dc6b)
+        ;
+
+        
+    
+    
+            circle_marker_c54c25b0f5368c998f7358ddbc715f90.bindTooltip(
+                `<div>
+                     세종특별자치시교육청 · 고위험 0개교
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
