@@ -4,6 +4,10 @@
 **대회**: 제8회 교육 공공데이터 AI 활용대회
 **역할**: Stage 1 공공데이터 분석 결과 시각화 (실제 심사위원이 URL로 접속해 검증 가능)
 
+> 🔗 **관련 저장소**: [`wizbeee/safeloop`](https://github.com/wizbeee/safeloop) (Private · 학교 안전 점검 시스템)
+> 본 대시보드는 위 점검 프로그램의 **공공 환원** 결과를 자동 합산해 표시합니다.
+> 환원 데이터 형식은 [`docs/opendata_schema.md`](docs/opendata_schema.md) 참고.
+
 ---
 
 ## 로컬 실행
