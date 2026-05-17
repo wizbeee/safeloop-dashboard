@@ -1,12 +1,19 @@
 """
 세이프루프 학교 안전 대시보드
 공공데이터 기반 전국 학교 시설 안전 현황 시각화
+
+점검 프로그램(safeloop)의 교육청 담당자가 공공 환원을 실행하면,
+공유 폴더에 저장된 환원 CSV를 본 대시보드가 자동으로 합산해 표시합니다.
+공유 폴더는 환경변수 SAFELOOP_SHARED_DIR 로 override 가능 (기본값:
+~/Desktop/공공데이터 공모전/03_분석_데이터/점검_환원/).
 """
+import os
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+from datetime import datetime
 from pathlib import Path
 
 st.set_page_config(
@@ -58,6 +65,58 @@ DATA_BASIS = "환경위생 2023 / 시설안전·학생수 2025"
 W_MISMANAGE = 0.4636
 W_ENVRISK = 0.3711
 W_DAYS = 0.1653
+
+# 공유 폴더 — 점검 프로그램의 교육청 담당자가 공공 환원 시 CSV 를 저장하는 위치.
+# 본 대시보드는 이 폴더의 활성 환원 CSV(opendata_*.csv) 를 자동 합산합니다.
+# `_rolled_back/` 하위 폴더는 무시 (롤백된 환원).
+#
+# 우선순위:
+#   1. 환경변수 SAFELOOP_SHARED_DIR (사용자 지정)
+#   2. 로컬 PC 표준 위치 (~/Desktop/공공데이터 공모전/03_분석_데이터/점검_환원/)
+#   3. 저장소 내부 fallback (data/점검_환원/) — Streamlit Cloud 배포 환경 대응
+def _resolve_shared_dir() -> Path:
+    candidates = [
+        os.environ.get("SAFELOOP_SHARED_DIR"),
+        str(Path.home() / "Desktop" / "공공데이터 공모전" / "03_분석_데이터" / "점검_환원"),
+        str(Path(__file__).parent / "data" / "점검_환원"),
+    ]
+    for p in candidates:
+        if p and Path(p).exists():
+            return Path(p)
+    # 모두 존재하지 않으면 저장소 내부 경로 반환 (없으면 빈 결과)
+    return Path(__file__).parent / "data" / "점검_환원"
+
+SHARED_DIR = _resolve_shared_dir()
+
+
+@st.cache_data(ttl=10)
+def load_returned_data(shared_dir_str: str):
+    """공유 폴더의 활성 환원 CSV 를 모두 읽어 하나의 DataFrame 으로 합산.
+
+    Returns:
+        (df, last_time_str)
+        - df 가 비어 있으면 환원 0건
+        - last_time_str: 가장 최신 환원 파일의 mtime (사람이 읽는 형식)
+    """
+    p = Path(shared_dir_str).expanduser()
+    if not p.exists():
+        return pd.DataFrame(), ""
+    dfs = []
+    latest_mtime = 0.0
+    for csv_path in sorted(p.glob("opendata_*.csv")):
+        try:
+            df = pd.read_csv(csv_path)
+            dfs.append(df)
+            mt = csv_path.stat().st_mtime
+            if mt > latest_mtime:
+                latest_mtime = mt
+        except Exception:
+            continue
+    if not dfs:
+        return pd.DataFrame(), ""
+    merged = pd.concat(dfs, ignore_index=True)
+    last_str = datetime.fromtimestamp(latest_mtime).strftime("%Y-%m-%d %H:%M") if latest_mtime else ""
+    return merged, last_str
 
 
 @st.cache_data
@@ -113,6 +172,49 @@ st.info(
     f"📌 **두 수치 차이 안내** — '즉시 점검 필요 학교({S1_COUNT}곳)'는 '고위험 그룹({high_risk:,}곳)' 중에서도 "
     f"가장 시급한 상위 학교만 추린 것입니다. 두 수치 모두 같은 데이터에서 나왔습니다."
 )
+
+# === 점검 환원 데이터 자동 합산 (점검 프로그램과의 연결고리) ===
+returned_df, returned_last_time = load_returned_data(str(SHARED_DIR))
+returned_count = len(returned_df) if not returned_df.empty else 0
+
+if returned_count > 0:
+    col_msg, col_btn = st.columns([5, 1])
+    with col_msg:
+        st.success(
+            f"📥 **점검 환원 데이터 {returned_count}건 반영됨** "
+            f"(마지막 갱신: {returned_last_time}) — "
+            f"학교 현장 점검 결과가 추가되어 이 대시보드가 한층 정교해졌습니다."
+        )
+    with col_btn:
+        if st.button("🔄 새로고침", help="환원 즉시 반영하려면 클릭",
+                      key="refresh_returned"):
+            load_returned_data.clear()
+            st.rerun()
+    with st.expander(f"환원 데이터 상세 보기 (학교 {returned_count}곳)"):
+        st.caption(
+            "교육청 담당자가 학교 점검 결과를 익명화·집계해 공공데이터로 환원한 결과입니다. "
+            "개별 학교는 익명 ID(SHA-256 해시)로만 표시됩니다."
+        )
+        # 시도 분포
+        if "sido" in returned_df.columns:
+            sido_dist = returned_df["sido"].value_counts().reset_index()
+            sido_dist.columns = ["시도교육청", "환원 건수"]
+            colA, colB = st.columns([1, 1])
+            with colA:
+                st.markdown("**시도별 환원 분포**")
+                st.dataframe(sido_dist, use_container_width=True, hide_index=True)
+            with colB:
+                if "safety_score" in returned_df.columns:
+                    avg = returned_df["safety_score"].dropna().mean()
+                    st.metric("환원 학교 평균 안전점수", f"{avg:.1f}점" if pd.notna(avg) else "—")
+                if "grade" in returned_df.columns:
+                    grade_dist = returned_df["grade"].value_counts().to_dict()
+                    st.markdown("**등급 분포**")
+                    st.write(grade_dist)
+        # 원본 표
+        st.markdown("**환원 데이터 원본 (익명)**")
+        st.dataframe(returned_df, use_container_width=True, height=300)
+
 st.divider()
 
 # === 탭 ===
