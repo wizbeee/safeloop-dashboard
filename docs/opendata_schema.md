@@ -83,7 +83,7 @@
 [대시보드]
   app.py · load_returned_data(SHARED_DIR)
   ↓ 활성 CSV 모두 합산 (캐시 TTL 10초)
-KPI 영역 아래 "📥 점검 환원 데이터 N건 반영됨" 안내 + 환원 데이터 expander
+KPI 영역 아래 "점검 환원 데이터 N건 반영됨" 안내 + 환원 데이터 expander
 ```
 
 ---
