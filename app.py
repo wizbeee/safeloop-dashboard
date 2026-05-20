@@ -220,13 +220,12 @@ if returned_count > 0:
 st.divider()
 
 # === 탭 ===
-tab1, tab_map, tab2, tab3, tab4, tab_policy = st.tabs([
+tab1, tab_map, tab2, tab3, tab4 = st.tabs([
     "시도별 현황",
     "지도로 보기",
     "그룹 분류",
     "결과 안정성",
     "고위험 학교 명단",
-    "정책 우선순위",
 ])
 
 # ────────────────────────────────────────────────────
@@ -460,113 +459,6 @@ with tab4:
     st.dataframe(view, use_container_width=True, height=500)
     csv = view.to_csv(index=False, encoding="utf-8-sig")
     st.download_button("선택한 조건의 데이터 내려받기 (CSV)", csv, "학교_안전_현황.csv", "text/csv")
-
-# ────────────────────────────────────────────────────
-# 탭 6 — 정책 우선순위 (교육청 의사결정 도구)
-# ────────────────────────────────────────────────────
-with tab_policy:
-    st.subheader("교육청 정책 의사결정 도구")
-    st.caption(
-        "SafeLoop 는 점검 앱이 아니라 **예산·점검·지원 우선순위를 결정하는 정책 도구**입니다. "
-        "이 탭은 교육청 담당자가 다음 분기 정책을 수립할 때 바로 활용 가능한 우선순위 데이터를 제공합니다."
-    )
-
-    pcol1, pcol2 = st.columns([1, 2])
-    with pcol1:
-        st.markdown("##### 우선 점검 학교 수 설정")
-        topk = st.number_input(
-            "다음 분기 우선 점검 학교 수",
-            min_value=10, max_value=2000, value=100, step=10,
-            help="가용 점검 인력·예산에 따라 조정. 기본 100곳 (한 교육청 분기 점검 평균치)",
-        )
-        st.markdown("##### 필터")
-        sido_opts = ["전체"] + sorted(high_df["시도교육청"].dropna().unique().tolist()) if "시도교육청" in high_df.columns else ["전체"]
-        sido_filter = st.selectbox("시도교육청", sido_opts, index=0)
-        level_opts = ["전체"] + sorted(high_df["학교급"].dropna().unique().tolist()) if "학교급" in high_df.columns else ["전체"]
-        level_filter = st.selectbox("학교급", level_opts, index=0)
-
-    with pcol2:
-        st.markdown("##### 우선 점검 권장 학교 명단")
-        st.caption(
-            "위험도 점수 상위 학교를 자동 추출합니다. "
-            "학교명은 익명 처리(시도교육청·학교급·설립 유형까지만 공개)."
-        )
-        # 필터 적용
-        priority_df = high_df.copy()
-        if sido_filter != "전체" and "시도교육청" in priority_df.columns:
-            priority_df = priority_df[priority_df["시도교육청"] == sido_filter]
-        if level_filter != "전체" and "학교급" in priority_df.columns:
-            priority_df = priority_df[priority_df["학교급"] == level_filter]
-        if "위험도_점수" in priority_df.columns:
-            priority_df = priority_df.sort_values("위험도_점수", ascending=False).head(int(topk))
-        else:
-            priority_df = priority_df.head(int(topk))
-
-        st.metric("우선 점검 대상", f"{len(priority_df)}개교",
-                  help=f"필터 후 상위 {topk}곳 중 실제 매칭된 학교 수")
-
-        # 익명 명단 표시
-        anon_cols = [c for c in ["시도교육청", "학교급", "설립", "위험도_점수"]
-                     if c in priority_df.columns]
-        anon_view = priority_df[anon_cols].reset_index(drop=True)
-        anon_view.index = [f"#{i+1}" for i in range(len(anon_view))]
-        st.dataframe(anon_view, use_container_width=True, height=300)
-
-        # 우선순위 명단 다운로드
-        csv_priority = anon_view.to_csv(index=True, encoding="utf-8-sig")
-        st.download_button(
-            "정책 자료용 우선순위 명단 다운로드 (CSV)",
-            csv_priority,
-            f"safeloop_정책우선순위_{sido_filter}_{level_filter}.csv",
-            "text/csv",
-        )
-
-    st.markdown("---")
-
-    # ─── 카테고리별 예산 추정 (환원 데이터 있을 때만) ───
-    st.markdown("##### 환원 데이터 기반 카테고리별 위험 분포")
-    if returned_count > 0:
-        st.caption(
-            f"현재 환원된 {returned_count}건의 점검 결과를 분석해 "
-            "어느 카테고리(소화기·환기·개인보호구 등)에 우선 예산을 배정해야 할지 도출합니다."
-        )
-        # 환원 데이터의 detected/absent 분포 — 부재가 많은 카테고리가 우선 보강 대상
-        if not returned_df.empty:
-            ecol1, ecol2 = st.columns(2)
-            with ecol1:
-                st.markdown("**평균 안전점수 분포 (환원 학교)**")
-                if "safety_score" in returned_df.columns:
-                    score_stats = returned_df["safety_score"].dropna().describe()
-                    st.dataframe(score_stats.to_frame().round(2),
-                                  use_container_width=True)
-            with ecol2:
-                st.markdown("**부족 설비 카테고리 (가장 많이 'absent' 분류된)**")
-                if "absent_count" in returned_df.columns:
-                    avg_absent = returned_df["absent_count"].dropna().mean()
-                    st.metric("학교당 평균 부족 설비 수",
-                              f"{avg_absent:.1f}개" if pd.notna(avg_absent) else "—")
-                    st.caption(
-                        "이 수치가 높을수록 해당 학교에 우선 시설 보강이 필요합니다."
-                    )
-    else:
-        st.info(
-            "환원 데이터가 누적되면 카테고리별 위험 분포 + 예산 추정이 "
-            "이 영역에 자동 표시됩니다. (현재 시연용 데이터로 데모 진행 중)"
-        )
-
-    st.markdown("---")
-    st.markdown("##### 정책 활용 가이드")
-    st.markdown(
-        """
-        | 단계 | 활용 방법 |
-        |---|---|
-        | **1. 우선순위 도출** | 위 우선 점검 명단 → 다음 분기 점검 일정에 반영 |
-        | **2. 예산 배정** | 카테고리별 부족 설비 분포 → 예산 항목 우선순위 |
-        | **3. 정책 자료 작성** | CSV 다운로드 → 분기별 안전점검 정책보고서에 첨부 |
-        | **4. 학교별 지원** | 낙인 방지를 위해 학교명 비공개, 교육청 내부 매칭만 |
-        | **5. 데이터 환원** | 점검 결과를 다시 공공데이터로 환원 → 다음 분기 모델 정확도 ↑ |
-        """
-    )
 
 # ────────────────────────────────────────────────────
 # 한계 안내 (정직성)
