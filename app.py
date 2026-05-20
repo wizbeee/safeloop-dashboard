@@ -168,32 +168,34 @@ c3.metric("고위험 그룹", f"{high_risk:,}개교",
 c4.metric("주의 그룹", f"{caution:,}개교", f"전체의 {caution/total_schools*100:.1f}%", delta_color="off")
 c5.metric("양호 그룹", f"{ok:,}개교", f"전체의 {ok/total_schools*100:.1f}%")
 
-st.info(
-    f"**두 수치 차이 안내** — '즉시 점검 필요 학교({S1_COUNT}곳)'는 '고위험 그룹({high_risk:,}곳)' 중에서도 "
-    f"가장 시급한 상위 학교만 추린 것입니다. 두 수치 모두 같은 데이터에서 나왔습니다."
-)
-
 # === 점검 환원 데이터 자동 합산 (점검 프로그램과의 연결고리) ===
 returned_df, returned_last_time = load_returned_data(str(SHARED_DIR))
 returned_count = len(returned_df) if not returned_df.empty else 0
 
 if returned_count > 0:
-    col_msg, col_btn = st.columns([5, 1])
-    with col_msg:
-        st.success(
-            f"**점검 환원 데이터 {returned_count}건 반영됨** "
-            f"(마지막 갱신: {returned_last_time}) — "
-            f"학교 현장 점검 결과가 추가되어 이 대시보드가 한층 정교해졌습니다."
+    # 깔끔한 메타 텍스트 + 우측 새로고침 아이콘 버튼
+    col_meta, col_refresh = st.columns([9, 1])
+    with col_meta:
+        st.markdown(
+            f"<div style='padding:6px 0;font-size:13px;color:#3F3F46;"
+            f"line-height:1.5;'>"
+            f"<b style='color:#0A0A0B;'>환원 데이터 {returned_count}건 반영</b>"
+            f" <span style='color:#71717A;'>· 마지막 갱신 {returned_last_time}"
+            f" · 시연용 가상 데이터</span>"
+            f"</div>",
+            unsafe_allow_html=True,
         )
-    with col_btn:
-        if st.button("새로고침", help="환원 즉시 반영하려면 클릭",
-                      key="refresh_returned"):
+    with col_refresh:
+        if st.button("↻", help="환원 데이터 새로고침",
+                      key="refresh_returned", use_container_width=True):
             load_returned_data.clear()
             st.rerun()
     with st.expander(f"환원 데이터 상세 보기 (학교 {returned_count}곳)"):
         st.caption(
-            "교육청 담당자가 학교 점검 결과를 익명화·집계해 공공데이터로 환원한 결과입니다. "
-            "개별 학교는 익명 ID(SHA-256 해시)로만 표시됩니다."
+            "**시연용 가상 데이터입니다** — 실제 환원 흐름이 정상 작동함을 보여주기 위해 "
+            "28개교 가상 환원 데이터(`data/점검_환원/opendata_demo_*.csv`)를 미리 넣어두었습니다. "
+            "실 운영 시에는 교육청 담당자가 학교 점검 결과를 익명화·집계해 공공데이터로 환원하면 "
+            "이 자리에 자동 누적되며, 개별 학교는 익명 ID(SHA-256 해시)로만 표시됩니다."
         )
         # 시도 분포
         if "sido" in returned_df.columns:
@@ -344,9 +346,38 @@ with tab2:
 with tab3:
     st.subheader("결과가 얼마나 안정적인가?")
     st.caption(
-        "비중을 ±20% 흔들었을 때 '즉시 점검 필요 학교 526곳' 명단이 얼마나 유지되는지 확인합니다. "
+        f"비중을 ±20% 흔들었을 때 '즉시 점검 필요 학교 {S1_COUNT}곳' 명단이 얼마나 유지되는지 확인합니다. "
         "겹침 비율이 높을수록 결과가 안정적입니다."
     )
+    with st.expander("이 분석이 왜 중요한가요? (3분 설명)", expanded=False):
+        st.markdown(
+            f"""
+            #### 왜 민감도를 보는가
+            안전 점수를 매길 때 **민원·환경·경과일** 세 요인의 비중을 정해야 합니다.
+            예: 민원 50% + 환경 30% + 경과일 20% = 1.00.
+
+            그런데 이 비중을 "왜 50%인가? 왜 30%인가?" 라고 물으면 누구도 100%
+            확신할 수 없습니다. 다른 사람은 "민원 40% + 환경 40% + 경과일 20%"
+            를 쓸 수도 있죠. 그럼 결과(고위험 학교 명단)가 **사람마다 달라질까요?**
+
+            #### 어떻게 검증하는가
+            세 비중을 각각 ±20% 범위 안에서 흔들어 보고 (26 시나리오), 매 시나리오마다
+            "즉시 점검 필요 {S1_COUNT}곳" 을 다시 뽑습니다. 그 다음 원래 명단과
+            새 명단이 **얼마나 겹치는지** 측정합니다.
+
+            #### 어떻게 해석하는가
+            | 겹침 비율 | 의미 |
+            |:---:|---|
+            | **90% 이상** | 매우 안정적 — 비중을 흔들어도 거의 같은 학교가 뽑힘. 결과 신뢰 가능 |
+            | **70~90%** | 안정적 — 핵심 학교는 유지, 경계선의 학교만 일부 변동 |
+            | **50~70%** | 보통 — 비중 선택이 결과에 영향. 추가 검증 권장 |
+            | **50% 미만** | 불안정 — 비중을 바꾸면 명단이 크게 변함. 비중 재설계 필요 |
+
+            아래 산점도에서 점 1개 = 비중 변동 시나리오 1개. **점들이 우측 상단에
+            모일수록 안정적**입니다. 오른쪽 '한눈에 보기' 의 중앙값으로 빠르게
+            판단할 수 있습니다.
+            """
+        )
     if "jaccard" in sens_df.columns and "overlap(%)" in sens_df.columns:
         col1, col2 = st.columns([3, 1])
         with col1:
